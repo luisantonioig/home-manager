@@ -10,7 +10,7 @@
     (./emacs/emacs.nix)
     (./sh/zsh.nix)
     #  TODO @luisantonioig: It seems that google-chrome does not works on ubuntu using home-manager so instead install it using sudo apt get google-chrome
-    # (./google-chrome/google-chrome.nix)
+    (./google-chrome/google-chrome.nix)
     
   ];
 
@@ -75,7 +75,8 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     # google-chrome
-
+    slack
+    
     ventoy
 
     zsh

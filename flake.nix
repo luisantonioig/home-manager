@@ -15,6 +15,7 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
+      #  TODO @luisantonioig: Create a separate configuration for ubuntu since some packages does not work with ubuntu using flakes
       homeConfigurations."antonio" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 

@@ -52,8 +52,8 @@
    `(show-paren-match ((,class (:background ,blue :foreground ,bg :weight bold))))
    `(show-paren-mismatch ((,class (:background ,red :foreground ,bg :weight bold))))
    ))
-(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alfpha . (90 . 90)))
+(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
 (set-frame-font "IBM Plex Mono" nil t)
 
 ;; Cursor configuration
@@ -145,7 +145,7 @@
  '(line-number ((t (:foreground "#7F7F7F" :background "#1E1E1E"))))  ;; Números en gris
  '(line-number-current-line ((t (:foreground "#FFCC66" :weight bold))))) ;; Línea actual en amarillo
 
-(set-face-attribute 'line-number nil :height 140) ;; Ajusta el tamaño
+(set-face-attribute 'line-number nil :height 200) ;; Ajusta el tamaño
 (set-face-attribute 'line-number-current-line nil :height 110)
 
 (dolist (mode '(eshell-mode-hook

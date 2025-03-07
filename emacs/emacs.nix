@@ -26,6 +26,8 @@
       epkgs.doom-modeline
       epkgs.nerd-icons
       epkgs.dashboard
+      epkgs.dash
+      epkgs.dash-functional
 
       epkgs.typescript-mode
       epkgs.web-mode
