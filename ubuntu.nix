@@ -6,10 +6,10 @@
   home.username = "antonio";
   home.homeDirectory = "/home/antonio";
   imports = [
+    ( ./sh/zsh.nix )
     #(./git/git.nix)
     (./emacs/emacs.nix)
     #(./sh/zsh.nix)
-    #  TODO @luisantonioig: It seems that google-chrome does not works on ubuntu using home-manager so instead install it using sudo apt get google-chrome
     #(./google-chrome/google-chrome.nix)
     
   ];
@@ -81,29 +81,14 @@
 
     # zsh
     # oh-my-zsh
-    fzf
-    zoxide
-    #  TODO @luisantonioig: Looks like this package also does not work for ubuntu, so install it using sudo apt install slack-desktop
-    # slack
-    ibm-plex
-    ripgrep
+    # fzf
+    # zoxide
+    # ibm-plex
+    # ripgrep
     
     nodejs_23
     typescript
     typescript-language-server
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ]);
     
     

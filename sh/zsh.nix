@@ -40,10 +40,13 @@ in
 
   programs.bash = {
     enable = true;
-    enableCompletion = true;
-    shellAliases = myAliases;
-    bashrcExtra = ''source ~/.config/programbs.bash'';
+    # enableCompletion = true;
+    # shellAliases = myAliases;
+    # bashrcExtra = ''source ~/.config/programbs.bash'';
   };
+
+  #  TODO @luisantonioig: Does this also work on NixOS??? What it means?
+  targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
     vivid
@@ -51,7 +54,22 @@ in
     gnugrep gnused
     bat eza bottom fd bc
     direnv nix-direnv
+    fzf zoxide ripgrep
   ];
+
+  home.file.".bash_profile".text = ''
+    export SHELL="${pkgs.zsh}/bin/zsh"
+    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
+  '';
+  
+  home.file.".bashrc".text = ''
+    [ -z "$ZSH_VERSION" ] && exec "${pkgs.zsh}/bin/zsh"
+  '';
+  
+  # Asegúrate de que la variable SHELL siempre apunte a Zsh
+  home.sessionVariables = {
+    SHELL = "${pkgs.zsh}/bin/zsh";
+  }; 
 
   programs.direnv.enable = true;
   programs.direnv.enableZshIntegration = true;
