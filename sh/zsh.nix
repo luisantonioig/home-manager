@@ -55,6 +55,7 @@ in
     bat eza bottom fd bc
     direnv nix-direnv
     fzf zoxide ripgrep
+    ibm-plex
   ];
 
   home.file.".bashrc".text = ''
