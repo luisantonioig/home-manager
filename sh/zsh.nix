@@ -57,24 +57,56 @@ in
     fzf zoxide ripgrep
   ];
 
-  home.activation = {
-    setZshAsDefault = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if ! grep -q "export SHELL=${pkgs.zsh}/bin/zsh" ~/.bashrc; then
-        echo "Adding Zsh shell selection to .bashrc"
-        echo -e "\n# Added by home-manager\nexport SHELL=${pkgs.zsh}/bin/zsh\n[ -z \"\$ZSH_VERSION\" ] && exec \"\$SHELL\" -l\n" >> ~/.bashrc
-      fi
-      
-      if ! grep -q "export SHELL=${pkgs.zsh}/bin/zsh" ~/.profile; then
-        echo "Adding Zsh shell selection to .profile"
-        echo -e "\n# Added by home-manager\nexport SHELL=${pkgs.zsh}/bin/zsh\n[ -z \"\$ZSH_VERSION\" ] && exec \"\$SHELL\" -l\n" >> ~/.profile
-      fi
-    '';
-  };
+  home.file.".bashrc".text = ''
+    # ~/.bashrc: executed by bash(1) for non-login shells.
+    [ -f /etc/bashrc ] && . /etc/bashrc
+    
+    # If not running interactively, don't do anything
+    case $- in
+        *i*) ;;
+          *) return;;
+    esac
+    
+    # Include any existing system bashrc
+    if [ -f /etc/bash.bashrc ]; then
+        . /etc/bash.bashrc
+    fi
+    
+    # Include user's private bin if it exists
+    if [ -d "$HOME/bin" ] ; then
+        PATH="$HOME/bin:$PATH"
+    fi
+    
+    if [ -d "$HOME/.local/bin" ] ; then
+        PATH="$HOME/.local/bin:$PATH"
+    fi
+    
+    # Set Zsh as default shell
+    export SHELL="${pkgs.zsh}/bin/zsh"
+    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
+  '';
   
-  # Asegúrate de que la variable SHELL siempre apunte a Zsh
-  home.sessionVariables = {
-    SHELL = "${pkgs.zsh}/bin/zsh";
-  }; 
+  home.file.".profile".text = ''
+    # ~/.profile: executed by the command interpreter for login shells.
+    
+    # Include user's private bin if it exists
+    if [ -d "$HOME/bin" ] ; then
+        PATH="$HOME/bin:$PATH"
+    fi
+    
+    if [ -d "$HOME/.local/bin" ] ; then
+        PATH="$HOME/.local/bin:$PATH"
+    fi
+    
+    # Include Nix paths
+    if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+        . $HOME/.nix-profile/etc/profile.d/nix.sh
+    fi
+    
+    # Set Zsh as default shell
+    export SHELL="${pkgs.zsh}/bin/zsh"
+    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
+  '';
 
   programs.direnv.enable = true;
   programs.direnv.enableZshIntegration = true;
