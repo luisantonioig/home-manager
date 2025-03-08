@@ -38,12 +38,12 @@ in
     '';  
   };
 
-  programs.bash = {
-    enable = true;
-    # enableCompletion = true;
-    # shellAliases = myAliases;
-    # bashrcExtra = ''source ~/.config/programbs.bash'';
-  };
+  # programs.bash = {
+  #   enable = true;
+  #   # enableCompletion = true;
+  #   # shellAliases = myAliases;
+  #   # bashrcExtra = ''source ~/.config/programbs.bash'';
+  # };
 
   #  TODO @luisantonioig: Does this also work on NixOS??? What it means?
   targets.genericLinux.enable = true;
