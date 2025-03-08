@@ -57,14 +57,20 @@ in
     fzf zoxide ripgrep
   ];
 
-  home.file.".bash_profile".text = ''
-    export SHELL="${pkgs.zsh}/bin/zsh"
-    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
-  '';
-  
-  home.file.".bashrc".text = ''
-    [ -z "$ZSH_VERSION" ] && exec "${pkgs.zsh}/bin/zsh"
-  '';
+  home.activation = {
+    setZshAsDefault = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if ! grep -q "export SHELL=${pkgs.zsh}/bin/zsh" ~/.bashrc; then
+        echo "Adding Zsh shell selection to .bashrc"
+        echo -e "\n# Added by home-manager\nexport SHELL=${pkgs.zsh}/bin/zsh\n[ -z \"\$ZSH_VERSION\" ] && exec \"\$SHELL\" -l\n" >> ~/.bashrc
+      fi
+      
+      if ! grep -q "export SHELL=${pkgs.zsh}/bin/zsh" ~/.profile; then
+        echo "Adding Zsh shell selection to .profile"
+        echo -e "\n# Added by home-manager\nexport SHELL=${pkgs.zsh}/bin/zsh\n[ -z \"\$ZSH_VERSION\" ] && exec \"\$SHELL\" -l\n" >> ~/.profile
+      fi
+    '';
+  };
+  home.enableNixpgsReleaseCheck = true;
   
   # Asegúrate de que la variable SHELL siempre apunte a Zsh
   home.sessionVariables = {
