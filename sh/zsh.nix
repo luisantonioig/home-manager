@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
 
   # My shell aliases
@@ -70,7 +70,6 @@ in
       fi
     '';
   };
-  home.enableNixpgsReleaseCheck = true;
   
   # Asegúrate de que la variable SHELL siempre apunte a Zsh
   home.sessionVariables = {
