@@ -58,34 +58,7 @@ in
     ibm-plex
   ];
 
-  home.file.".bashrc".text = ''
-    # ~/.bashrc: executed by bash(1) for non-login shells.
-    [ -f /etc/bashrc ] && . /etc/bashrc
-    
-    # If not running interactively, don't do anything
-    case $- in
-        *i*) ;;
-          *) return;;
-    esac
-    
-    # Include any existing system bashrc
-    if [ -f /etc/bash.bashrc ]; then
-        . /etc/bash.bashrc
-    fi
-    
-    # Include user's private bin if it exists
-    if [ -d "$HOME/bin" ] ; then
-        PATH="$HOME/bin:$PATH"
-    fi
-    
-    if [ -d "$HOME/.local/bin" ] ; then
-        PATH="$HOME/.local/bin:$PATH"
-    fi
-    
-    # Set Zsh as default shell
-    export SHELL="${pkgs.zsh}/bin/zsh"
-    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
-  '';
+  home.file.".bashrc".source = ../.bashrc;
   
   home.file.".profile".text = ''
     # ~/.profile: executed by the command interpreter for login shells.
