@@ -6,7 +6,7 @@
   home.username = "antonio";
   home.homeDirectory = "/home/antonio";
   imports = [
-    ( ./sh/zsh.nix )
+    # ( ./sh/zsh.nix )
     #(./git/git.nix)
     (./emacs/emacs.nix)
     #(./sh/zsh.nix)
@@ -66,25 +66,12 @@
     # };
   # };
 
-  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages =(with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-    # google-chrome
-    # slack
-    
-    # ventoy
-
-    # zsh
-    # oh-my-zsh
-    # fzf
-    # zoxide
-    # ibm-plex
-    # ripgrep
+    spotify
     
     nodejs_23
     typescript
