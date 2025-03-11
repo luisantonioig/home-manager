@@ -51,6 +51,7 @@
     path = ./elegant-black-theme.el;
   };
   home.packages = with pkgs; [
+    ripgrep
     nerd-fonts.fira-code
   ];
 }

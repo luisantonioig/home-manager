@@ -141,14 +141,15 @@
 (defun dashboard-get-todos ()
   "Obtener lista de TODOs usando ripgrep."
   (let* ((default-directory (or default-directory "~/"))
-         (cmd (format "rg --line-number \"TODO\" %s" default-directory))
+         (cmd (format "rg --line-number \"TODO @luisantonioig: \" %s" default-directory))
          (output (shell-command-to-string cmd))
          (todos '()))
     (dolist (line (split-string output "\n" t))
-      (when (string-match "\\(.*\\):\\([0-9]+\\):.*TODO.*" line)
+      (when (string-match "\\(.*\\):\\([0-9]+\\):.*TODO @luisantonioig: \\(.*\\)" line)
         (let ((file (match-string 1 line))
-              (line-num (string-to-number (match-string 2 line))))
-          (push (cons file line-num) todos))))
+              (line-num (string-to-number (match-string 2 line)))
+              (todo-text (match-string 3 line)))
+          (push (list file line-num todo-text) todos))))
     (nreverse todos)))
 
 ;; Función para insertar TODOs en el dashboard
@@ -158,8 +159,10 @@
     (if (not todos)
         (insert "\n    No se encontraron TODOs")
       (dolist (todo (seq-take todos list-size))
-        (let ((file (car todo))
-              (line (cdr todo)))
+        (let ((file (nth 0 todo))
+              (line (nth 1 todo))
+              (text (nth 2 todo))
+              )
           (insert "\n    ")
           (widget-create 'push-button
                         :action `(lambda (&rest _)
@@ -171,7 +174,7 @@
                         :button-prefix ""
                         :button-suffix ""
                         :format "%[%t%]"
-                        (format "%s:%d" (file-name-nondirectory file) line)))))))
+                        (format "%s:%d - \t%s" (file-name-nondirectory file) line text)))))))
 
 ;; Registrar la función para la sección personalizada
 (add-to-list 'dashboard-item-generators '(todos . dashboard-insert-todos))
@@ -188,7 +191,24 @@
 ;; Atajo de teclado para refrescar
 (global-set-key (kbd "C-c d") 'dashboard-refresh)
 
+;; Función para saltar a la sección de TODOs en el dashboard
+(defun dashboard-jump-to-todos ()
+  "Saltar a la sección de TODOs en el dashboard."
+  (interactive)
+  (let ((buffer (get-buffer dashboard-buffer-name)))
+    (when buffer
+      (with-current-buffer buffer
+        (goto-char (point-min))
+        (when (re-search-forward "TODOs" nil t)
+          (beginning-of-line)
+          (forward-line 1))))))
 
+;; Agregar la tecla "t" al mapa de teclas del dashboard
+(with-eval-after-load 'dashboard
+  (define-key dashboard-mode-map (kbd "t") 'dashboard-jump-to-todos))
+
+;; Agregar la tecla a la lista de atajos mostrados en el dashboard
+(add-to-list 'dashboard-item-shortcuts '(todos . "t"))
 
 ;; (use-package dashboard
 ;;   :ensure t
