@@ -37,7 +37,7 @@
    `(font-lock-keyword-face ((,class (:foreground ,red :weight bold))))
    `(font-lock-string-face ((,class (:foreground ,green))))
    `(font-lock-type-face ((,class (:foreground ,yellow))))
-   `(font-lock-variable-name-face ((,class (:foreground ,fg))))
+   `(font-lock-variable-name-face ((,class (:foreground ,orange))))
    `(font-lock-warning-face ((,class (:foreground ,red :background ,bg-alt :weight bold))))
 
    ;; Configuración de la barra de modo (mode-line):

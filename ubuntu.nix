@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, aikenFlake, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -72,6 +72,8 @@
   # environment.
   home.packages =(with pkgs; [
     spotify
+    
+    aikenFlake.packages.${pkgs.system}.aiken
     
     nodejs_23
     typescript

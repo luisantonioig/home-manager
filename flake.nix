@@ -8,9 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    aikenFlake.url = "github:luisantonioig/aiken";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = inputs@{ aikenFlake,nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -21,6 +22,9 @@
       };
       homeConfigurations.ubuntu = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = {
+          inherit aikenFlake;
+        };
         modules = [ ./ubuntu.nix ];
       };
     };

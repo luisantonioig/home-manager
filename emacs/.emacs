@@ -1,3 +1,4 @@
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'elegant-black t)
 
@@ -137,10 +138,19 @@
                         (bookmarks . 5)
                         (todos . 10)))  ;; Sección personalizada para TODOs
 
+(defun is-weekday-p ()
+  "Devuelve t si hoy es un día entre semana (lunes a viernes), nil en caso contrario."
+  (let* ((dow-num (string-to-number (format-time-string "%w"))))
+    ;; %w devuelve 0 para domingo, 1-5 para lunes-viernes, 6 para sábado
+    (and (> dow-num 0) (< dow-num 6))))
+
 ;; Función para obtener TODOs usando ripgrep
 (defun dashboard-get-todos ()
   "Obtener lista de TODOs usando ripgrep."
-  (let* ((default-directory (or default-directory "~/"))
+  (let* ((default-directory (if (is-weekday-p)
+               "~/iog"
+               "~/personal"))
+         ;; (default-directory (or default-directory "~/"))
          (cmd (format "rg --line-number \"TODO @luisantonioig: \" %s" default-directory))
          (output (shell-command-to-string cmd))
          (todos '()))
@@ -315,3 +325,6 @@
 (setq doom-modeline-enable-word-count t) ;; Mostrar conteo de palabras en modos como org-mode
 (setq doom-modeline-buffer-encoding nil) ;; Ocultar codificación del buffer
 (setq doom-modeline-env-version nil) ;; Ocultar versiones de entorno como Python o Node
+
+;; Aiken support
+(require 'aiken-mode)
