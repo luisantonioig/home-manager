@@ -3,6 +3,8 @@
 ;; Autor: Tu Nombre
 ;; Descripción: Un tema oscuro y elegante, perfecto para complementar el borde negro de tu laptop y brindar una experiencia visual amigable.
 
+; TODO @luisantonioig: Is there a way to have dark and ligth modes that change automatically when the system mode changes?
+
 (deftheme elegant-black "Tema oscuro y elegante, diseñado para ser amable con la vista y avanzar con paso firme.")
 
 (let ((class '((class color) (min-colors 89)))

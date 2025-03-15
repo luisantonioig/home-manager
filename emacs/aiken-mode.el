@@ -58,7 +58,8 @@
    
    ;; Cadenas de texto 
    '("\".*?\"" . font-lock-string-face)
-   ; TODO @luisantonioig: Still does not highligth identifiers in expressions
+   ;; TODO @luisantonioig: Still does not highligth identifiers in expressions
+   ;; NOTE @luisantonioig: Maybe it does not have to
    ;; Variables (identificadores en expresiones)
    '("\\<\\([[:alpha:]][[:alnum:]_]*\\)\\>" 1 font-lock-variable-face))
   "Resaltado de sintaxis para Aiken mode")
@@ -102,6 +103,13 @@
     (when savep
       (move-to-column (+ indent (- (current-column) (current-indentation)))))))
 
+(defun aiken-new-line-and-indent ()
+  "insert a new line and indent."
+  (interactive)
+  (newline)
+  (aiken-indent-line)
+  (end-of-line))
+
 (define-derived-mode aiken-mode prog-mode "Aiken"
   "Modo mayor para editar archivos de Aiken"
   (setq font-lock-defaults '(aiken-font-lock-keywords))
@@ -115,7 +123,8 @@
   (setq-local indent-tabs-mode nil)
   (setq-local tab-width 2)
   (setq-local show-paren-mode t)
-  (setq-local electric-indent-mode t)
+
+  (local-set-key (kbd "RET") 'aiken-new-line-and-indent)
   
   (run-hooks 'aiken-mode-hook))
 
@@ -129,8 +138,8 @@
 (lsp-register-client
  (make-lsp-client
   :new-connection (lsp-stdio-connection
-                   (lambda () 
-                     (list "/home/antonio/.nix-profile/bin/aiken" "lsp" "--stdio")))
+                   (lambda ();
+                     (list "aiken" "lsp" "--stdio")))
   :major-modes '(aiken-mode)
   :server-id 'aiken-ls))
 

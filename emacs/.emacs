@@ -1,14 +1,16 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'elegant-black t)
-
+; TODO @luisantonioig: Make a cheat sheet of any available command in my configuration
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 (add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
-;; TODO @luisantonioig: Quitar esto despues de provar las capacidades de aiken lsp
-(setq lsp-log-io t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; NOTE @luisantonioig: La siguiente línea muestra la comunicación entre el servidor lsp y emacs, descomentar para debuguear ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (setq lsp-log-io t)
 
 ;; Graphical user interface
 (menu-bar-mode -1)
@@ -81,10 +83,6 @@
 (setq js-indent-level 2)
 
 
-;; TODO @luisantonioig: make aiken-mode to work
-;; (use-package aiken-mode
-;;   :load-path "~/personal/aiken-mode/")
-
 (setq inhibit-startup-screen t)
 (setq initial-buffer-choice nil)
 (setq inhibit-startup-echo-area-message t)
@@ -151,6 +149,7 @@
                "~/iog"
                "~/personal"))
          ;; (default-directory (or default-directory "~/"))
+         ;; TODO @luisantonioig: Maybe change my github handle for a environment variable so that any persona can use it
          (cmd (format "rg --line-number \"TODO @luisantonioig: \" %s" default-directory))
          (output (shell-command-to-string cmd))
          (todos '()))
@@ -313,7 +312,7 @@
   :init
   (doom-modeline-mode 1))
   ;; Install only if they aren't installed yet
-  ; TODO @luisantonioig: This takes so much, maybe look for a better solution
+  ; TODO @luisantonioig: This takes so much, maybe look for a better solution to run nerd-icons-install-fonts
   ;; (unless (my/nerd-icons-fonts-installed-p)
   ;;   (nerd-icons-install-fonts t))) ;; `t` para instalar sin preguntar
 
