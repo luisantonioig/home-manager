@@ -1,5 +1,7 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+
+;; NOTE: change theme using load-theme
 (load-theme 'elegant-black t)
 ; TODO @luisantonioig: Make a cheat sheet of any available command in my configuration
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -327,3 +329,31 @@
 
 ;; Aiken support
 (require 'aiken-mode)
+
+;; lsp-mode for aiken
+(require 'lsp-mode)
+
+;; Definición simplificada del cliente
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection
+                   (lambda ();
+                     (list "aiken" "lsp" "--stdio")))
+  :major-modes '(aiken-mode)
+  :server-id 'aiken-ls))
+
+;; Creación del modo si no existe
+(unless (fboundp 'aiken-mode)
+  (define-derived-mode aiken-mode prog-mode "Aiken"
+    "Major mode for editing Aiken files."
+    (setq-local comment-start "--")
+    (setq-local comment-end "")))
+
+;; Asociar extensiones de archivo
+(add-to-list 'auto-mode-alist '("\\.ak\\'" . aiken-mode))
+
+;; TODO @luisantonioig: Probably I need to put this part outside of the mode
+;; Activar LSP al abrir archivos Aiken
+(add-hook 'aiken-mode-hook #'lsp)
+
+(add-to-list 'lsp-language-id-configuration '(aiken-mode . "aiken"))

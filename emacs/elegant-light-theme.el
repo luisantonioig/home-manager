@@ -1,59 +1,60 @@
-;;; elegant-black-theme.el --- Tema elegante y oscuro para Emacs -*- lexical-binding: t; -*-
+;;; elegant-light-theme.el --- Tema elegante y claro para Emacs -*- lexical-binding: t; -*-
 
 ;; Autor: Tu Nombre
-;; Descripción: Un tema oscuro y elegante, perfecto para complementar el borde negro de tu laptop y brindar una experiencia visual amigable.
+;; Descripción: Un tema claro y elegante, perfecto para complementar el borde de tu laptop y brindar una experiencia visual amigable.
 
-(deftheme elegant-black "Tema oscuro y elegante, diseñado para ser amable con la vista y avanzar con paso firme.")
+(deftheme elegant-light "Tema claro y elegante, diseñado para ser amable con la vista y avanzar con paso firme.")
 
 (let ((class '((class color) (min-colors 89)))
       ;; Definición de la paleta de colores:
-      (fg "#DCDCCC")        ;; Color principal del texto.
-      (bg "#1E1E1E")        ;; Fondo principal (oscuro y elegante).
-      (bg-alt "#262626")    ;; Fondo alternativo para regiones y barras.
-      (cursor "#FFCC66")    ;; Color del cursor para resaltarlo.
-      (red "#F2777A")
-      (orange "#F99157")
-      (yellow "#FFCC66")
-      (green "#99CC99")
-      (blue "#6699CC")
-      (magenta "#CC99CC")
-      (cyan "#66CCCC")
-      (grey "#7F7F7F"))
+      (fg "#34302D")        ;; Color principal del texto (marrón oscuro)
+      (bg "#F5F2E0")        ;; Fondo principal (papel amarillento)
+      (bg-alt "#EAE6D1")    ;; Fondo alternativo para regiones y barras
+      (cursor "#D0803A")    ;; Color del cursor para resaltarlo (naranja elegante)
+      (red "#D34F4D")       ;; Versión más suave del rojo
+      (orange "#E67C45")    ;; Naranja más elegante
+      (yellow "#D19A45")    ;; Amarillo más elegante
+      (green "#689A74")     ;; Verde más suave
+      (blue "#4F89CC")      ;; Azul sofisticado
+      (magenta "#AA77AA")   ;; Magenta más suave
+      (cyan "#4C9999")      ;; Cyan elegante
+      (grey "#A0A0A0"))     ;; Gris medio para comentarios
   (custom-theme-set-faces
-   'elegant-black
+   'elegant-light
 
    ;; Configuración básica de colores:
    `(default ((,class (:background ,bg :foreground ,fg))))
    `(cursor ((,class (:background ,cursor))))
-   `(region ((,class (:background "#3A3A3A" :foreground ,fg))))
+   `(region ((,class (:background "#D9D9D9" :foreground ,fg))))
    `(fringe ((,class (:background ,bg))))
    `(minibuffer-prompt ((,class (:foreground ,blue :weight bold))))
 
    ;; Resaltado de sintaxis:
-   `(font-lock-builtin-face ((,class (:foreground ,magenta))))
-   `(font-lock-comment-face ((,class (:foreground ,grey :slant italic))))
-   `(font-lock-constant-face ((,class (:foreground ,cyan))))
-   `(font-lock-function-name-face ((,class (:foreground ,blue :weight bold))))
-   `(font-lock-keyword-face ((,class (:foreground ,red :weight bold))))
-   `(font-lock-string-face ((,class (:foreground ,green))))
-   `(font-lock-type-face ((,class (:foreground ,yellow))))
-   `(font-lock-variable-name-face ((,class (:foreground ,orange))))
+   `(font-lock-builtin-face ((,class (:foreground "#8C5383"))))
+   `(font-lock-comment-face ((,class (:foreground "#7D7165" :slant italic))))
+   `(font-lock-constant-face ((,class (:foreground "#3D7B7B"))))
+   `(font-lock-function-name-face ((,class (:foreground "#3B649A" :weight bold))))
+   `(font-lock-keyword-face ((,class (:foreground "#A44035" :weight bold))))
+   `(font-lock-string-face ((,class (:foreground "#4E6F49"))))
+   `(font-lock-type-face ((,class (:foreground "#8D6C28"))))
+   `(font-lock-variable-name-face ((,class (:foreground "#A9622A"))))
    `(font-lock-warning-face ((,class (:foreground ,red :background ,bg-alt :weight bold))))
 
    ;; Configuración de la barra de modo (mode-line):
    `(mode-line ((,class (:foreground ,fg :background ,bg-alt
                           :box (:line-width -1 :style released-button)))))
-   `(mode-line-inactive ((,class (:foreground ,grey :background ,bg
+   `(mode-line-inactive ((,class (:foreground "#9A9283" :background ,bg
                                    :box (:line-width -1 :style released-button)))))
    `(header-line ((,class (:foreground ,fg :background ,bg-alt))))
 
    ;; Otros elementos de la interfaz:
    `(link ((,class (:foreground ,blue :underline t))))
-   `(show-paren-match ((,class (:background ,blue :foreground ,bg :weight bold))))
-   `(show-paren-mismatch ((,class (:background ,red :foreground ,bg :weight bold))))
+   `(show-paren-match ((,class (:background "#BBDFFF" :foreground ,fg :weight bold))))
+   `(show-paren-mismatch ((,class (:background ,red :foreground "#FFFFFF" :weight bold))))
    ))
-(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
-(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+
+;; (set-frame-parameter (selected-frame) 'alpha '(95 . 95))
+;; (add-to-list 'default-frame-alist '(alpha . (95 . 95)))
 (set-frame-font "IBM Plex Mono" nil t)
 
 ;; Cursor configuration
@@ -65,37 +66,18 @@
 (defun my-cursor-update ()
   "Cambia el color del cursor según el estado del buffer."
   (if (buffer-modified-p)
-      (set-cursor-color "#F2777A")  ;; Rojo si hay cambios sin guardar
-    (set-cursor-color "#FFCC66"))) ;; Blanco si todo está guardado
+      (set-cursor-color "#A44035")  ;; Rojo antiguo si hay cambios sin guardar
+    (set-cursor-color "#A9622A"))) ;; Naranja antiguo si todo está guardado
 
 (add-hook 'post-command-hook #'my-cursor-update)
 
 (use-package beacon
   :ensure t
   :config
-  (setq beacon-color "#6699CC")
+  (setq beacon-color "#3B649A")
   (setq beacon-size 40)
   (setq beacon-blink-duration 0.2)
   (beacon-mode 1))
-
-;; TODO: this does not work (yet)
-;; (use-package smooth-cursor
-;;   :ensure t
-;;   :config
-;;   (setq smooth-cursor-type 'bar)
-;;   (setq smooth-cursor-speed 0.88)
-;;   (setq smooth-cursor-duration 0.3)
-;;   (smooth-cursor-mode 1))
-
-;; NOTE: this does not work because cursor is white if the file is saved and red if it is not
-;; (defun my-highlight-empty-line ()
-;;   "Cambia el color del cursor si está en una línea vacía o al final del archivo."
-;;   (if (or (looking-at-p "^[ \t]*$")  ;; Línea vacía
-;;           (eobp))                    ;; Fin del archivo
-;;       (set-cursor-color "magenta")    ;; Magenta si está en línea vacía o EOF
-;;     (set-cursor-color "white")))      ;; Blanco en otras líneas
-
-;; (add-hook 'post-command-hook #'my-highlight-empty-line)
 
 (defvar my-cursor-timer nil)
 (defvar my-cursor-speed-threshold 0.1) ;; Tiempo en segundos para detectar rapidez
@@ -114,8 +96,6 @@
 (add-hook 'post-command-hook #'my-adjust-cursor-size)
 
 ;; Configuration for modeline
-
-;; NOTE: I have to run (nerd-icons-install-fonts) to install all the icons needed
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -134,18 +114,17 @@
   (setq doom-modeline-modal-icon t))             ;; Mostrar el icono del modo actual (Evil-mode))
 
 (custom-set-faces
- '(mode-line ((t (:background "#262626" :foreground "#DCDCCC" :box nil))))  ;; Fondo oscuro, texto claro
- '(mode-line-inactive ((t (:background "#1E1E1E" :foreground "#7F7F7F" :box nil))))  ;; Versión atenuada
- '(doom-modeline-bar ((t (:background "#FFCC66")))))  ;; Amarillo elegante para el indicador de estado
+ '(mode-line ((t (:background "#EAE6D1" :foreground "#34302D" :box nil))))  ;; Fondo papel, texto oscuro
+ '(mode-line-inactive ((t (:background "#F5F2E0" :foreground "#9A9283" :box nil))))  ;; Versión atenuada
+ '(doom-modeline-bar ((t (:background "#A9622A")))))  ;; Naranja antiguo para el indicador de estado
 
 ;; Configuration for the line numbers
-
 (setq display-line-numbers-type 'visual)
 (custom-set-faces
- '(line-number ((t (:foreground "#7F7F7F" :background "#1E1E1E"))))  ;; Números en gris
- '(line-number-current-line ((t (:foreground "#FFCC66" :weight bold))))) ;; Línea actual en amarillo
+ '(line-number ((t (:foreground "#9A9283" :background "#F5F2E0"))))  ;; Números en marrón claro
+ '(line-number-current-line ((t (:foreground "#A9622A" :weight bold))))) ;; Línea actual en naranja antiguo
 
-(set-face-attribute 'line-number nil :height 200) ;; Ajusta el tamaño
+(set-face-attribute 'line-number nil :height 100) ;; Ajusta el tamaño
 (set-face-attribute 'line-number-current-line nil :height 110)
 
 (dolist (mode '(eshell-mode-hook
@@ -159,7 +138,5 @@
             (when (> (buffer-size) 500000)
               (display-line-numbers-mode -1))))
 
-
-
-(provide-theme 'elegant-black)
-;;; elegant-black-theme.el ends here
+(provide-theme 'elegant-light)
+;;; elegant-light-theme.el ends here

@@ -1,4 +1,4 @@
-{ config, pkgs, aikenFlake, ... }:
+{ config, pkgs, aikenFlake, aikenMode, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -73,6 +73,12 @@
   # environment.
   home.packages =(with pkgs; [
     spotify
+    ledger-live-desktop
+    #  NOTE: Set the udev rules using sudo ./ledger-live/ledger-udev-setup.sh or
+    #  NOTE @luisantonioig: I still have to put the udev rules in /etc/udev/rules.d/20-ledger.rules
+    #  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0001|0004|0005|0015|4000|4001|4002|4003|4004|4005|4006|4007|4008|4009|400a|400b|400c|400d|400e|400f|4010|4011|4012|4013|4014|4015|4016|4017|4018|4019|401a|401b|401c|401d|401e|401f", TAG+="uaccess", TAG+="udev-acl"
+    # And then run the following command
+    # sudo udevadm control --reload-rules && sudo udevadm trigger
     
     aikenFlake.packages.${pkgs.system}.aiken
     

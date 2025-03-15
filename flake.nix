@@ -9,9 +9,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     aikenFlake.url = "github:luisantonioig/aiken";
+    aikenMode = {
+      url = "github:luisantonioig/aiken-mode/ac165240a4a25314b7a2891840059d99f30f35f8";
+      inputs.nixpks.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ aikenFlake,nixpkgs, home-manager, ... }:
+  outputs = inputs@{ aikenFlake, aikenMode, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -24,6 +28,7 @@
         inherit pkgs;
         extraSpecialArgs = {
           inherit aikenFlake;
+          inherit aikenMode;
         };
         modules = [ ./ubuntu.nix ];
       };

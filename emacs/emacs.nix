@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, aikenMode, ... }:
 {   
   # # Instalar Emacs y configuraciones básicas
   programs.home-manager.enable = true;
@@ -40,6 +40,8 @@
       epkgs.orderless
       epkgs.consult
 
+      aikenMode.packages.${pkgs.system}.default
+
     ];
   };
   home.file.".emacs".source = builtins.path {
@@ -48,9 +50,8 @@
   home.file.".emacs.d/themes/elegant-black-theme.el".source = builtins.path {
     path = ./elegant-black-theme.el;
   };
-  #  TODO @luisantonioig: Create a new repository for aiken-mode?
-  home.file.".emacs.d/lisp/aiken-mode.el".source = builtins.path {
-    path = ./aiken-mode.el;
+  home.file.".emacs.d/themes/elegant-light-theme.el".source = builtins.path {
+    path = ./elegant-light-theme.el;
   };
   home.packages = with pkgs; [
     ripgrep

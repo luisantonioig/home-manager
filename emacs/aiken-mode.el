@@ -58,7 +58,7 @@
    
    ;; Cadenas de texto 
    '("\".*?\"" . font-lock-string-face)
-   ;; TODO @luisantonioig: Still does not highligth identifiers in expressions
+   ;; NOTE @luisantonioig: Still does not highligth identifiers in expressions
    ;; NOTE @luisantonioig: Maybe it does not have to
    ;; Variables (identificadores en expresiones)
    '("\\<\\([[:alpha:]][[:alnum:]_]*\\)\\>" 1 font-lock-variable-face))
