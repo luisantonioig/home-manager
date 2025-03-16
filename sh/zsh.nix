@@ -6,12 +6,33 @@
     # Aquí tus configuraciones específicas de zsh
     initExtra = ''
       # Configuraciones personalizadas
+      PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
+      %F{cyan}╰─%F{green}❯%f "
+      RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
+
+      [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
+
+      bindkey '^P' history-beginning-search-backward
+      bindkey '^N' history-beginning-search-forward
+      eval "$(fzf --zsh)"
+      eval "$(zoxide init zsh)"
     '';
     plugins = [
       # Plugins que quieras usar
     ];
+    
     # Otras opciones...
   };
+  home.sessionVariables = {
+    SHELL = "${pkgs.zsh}/bin/zsh";
+  };
+  programs.bash.enable = true;
+  targets.genericLinux.enable = true;
+  
+  home.file.".profile".text = ''
+    export SHELL="${pkgs.zsh}/bin/zsh"
+    [ -z "$ZSH_VERSION" ]     && exec "$SHELL" -l
+  ''; 
 }
 
 # { lib, pkgs, ... }:
@@ -39,7 +60,7 @@
 #     syntaxHighlighting.enable = true;
 #     enableCompletion = true;
 #     shellAliases = myAliases;
-#     initExtra = ''      
+#     initExtra = ''
 #       PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
 #       %F{cyan}╰─%F{green}❯%f "
 
