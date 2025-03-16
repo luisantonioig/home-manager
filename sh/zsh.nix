@@ -1,6 +1,7 @@
 { lib, pkgs, ...}:
 
 {
+  #  TODO @luisantonioig: This configuration works so well, I think I can customize my zsh
   programs.zsh = {
     enable = true;
     # Aquí tus configuraciones específicas de zsh
@@ -8,7 +9,7 @@
       # Configuraciones personalizadas
       PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
       %F{cyan}╰─%F{green}❯%f "
-      RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
+      # RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
 
       [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
 
@@ -28,6 +29,15 @@
   };
   programs.bash.enable = true;
   targets.genericLinux.enable = true;
+  home.packages = with pkgs; [
+    vivid
+    disfetch lolcat cowsay onefetch
+    gnugrep gnused
+    bat eza bottom fd bc
+    direnv nix-direnv
+    fzf zoxide ripgrep
+    ibm-plex
+  ];
   
   home.file.".profile".text = ''
     export SHELL="${pkgs.zsh}/bin/zsh"
@@ -82,7 +92,7 @@
 #   #   # bashrcExtra = ''source ~/.config/programbs.bash'';
 #   # };
 
-#   #  TODO @luisantonioig: Does this also work on NixOS??? What it means?
+#   #  NOTE @luisantonioig: This means that I am configuring on a non-Nixos Operating System
 #   targets.genericLinux.enable = true;
 
 #   home.packages = with pkgs; [

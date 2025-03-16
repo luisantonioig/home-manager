@@ -6,7 +6,6 @@
   home.username = "antonio";
   home.homeDirectory = "/home/antonio";
   imports = [
-    ## TODO @luisantonioig: I believe I can make zsh to work
     ( ./sh/zsh.nix )
     #(./git/git.nix)
     (./emacs/emacs.nix)
