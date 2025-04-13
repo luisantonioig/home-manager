@@ -1,4 +1,4 @@
-{ config, pkgs, aikenFlake, aikenMode, ... }:
+{ config, pkgs, aikenFlake, aikenMode, project-tracker, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -158,7 +158,8 @@
     # sudo udevadm control --reload-rules && sudo udevadm trigger
     
     aikenFlake.packages.${pkgs.system}.aiken
-    
+    project-tracker.packages.${pkgs.system}.default
+
     nodejs_23
     nodePackages.typescript
     nodePackages.ts-node

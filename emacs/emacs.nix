@@ -4,7 +4,7 @@
   programs.home-manager.enable = true;
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29.override {
+    package = pkgs.emacs30.override {
       withTreeSitter = true;
     };
     extraPackages = epkgs: [
