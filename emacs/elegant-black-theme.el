@@ -54,8 +54,7 @@
    ))
 (set-frame-parameter (selected-frame) 'alpha '(95 . 95))
 (add-to-list 'default-frame-alist '(alpha . (95 . 95)))
-(set-frame-font "IBM Plex Mono" nil t)
-
+;; (set-frame-font "IBM Plex Mono-12" nil t)
 ;; Cursor configuration
 (blink-cursor-mode 1)
 (setq-default cursor-type '(bar . 2))
@@ -145,8 +144,8 @@
  '(line-number ((t (:foreground "#7F7F7F" :background "#1E1E1E"))))  ;; Números en gris
  '(line-number-current-line ((t (:foreground "#FFCC66" :weight bold))))) ;; Línea actual en amarillo
 
-(set-face-attribute 'line-number nil :height 200) ;; Ajusta el tamaño
-(set-face-attribute 'line-number-current-line nil :height 110)
+;; (set-face-attribute 'line-number nil :height 200) ;; Ajusta el tamaño
+;; (set-face-attribute 'line-number-current-line nil :height 110)
 
 (dolist (mode '(eshell-mode-hook
                 shell-mode-hook

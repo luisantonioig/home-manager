@@ -23,47 +23,124 @@
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
+  programs.alacritty = {
+    package = pkgs.runCommand "alacritty-system" {} ''
+      mkdir -p $out/bin
+      ln -s /usr/bin/alacritty $out/bin/alacritty
+    '';
+    enable = true;
+    settings = {
+      window = {
+        padding = {
+          x = 8;
+          y = 8;
+        };
+        opacity = 0.9;
+      };
+      
+      font = {
+        normal = {
+          family = "IBM Plex Mono";
+        };
+        size = 12.0;
+      };
+      
+      # Esquema de colores similar al que tenías en Kitty
+      colors = {
+        primary = {
+          background = "#1E1E1E";
+          foreground = "#DCDCCC";
+        };
+        
+        cursor = {
+          text = "#1E1E1E";
+          cursor = "#FFCC66";
+        };
+        
+        selection = {
+          text = "#DCDCCC";
+          background = "#3A3A3A";
+        };
+        
+        normal = {
+          black = "#1E1E1E";
+          red = "#F2777A";
+          green = "#99CC99";
+          yellow = "#FFCC66";
+          blue = "#6699CC";
+          magenta = "#CC99CC";
+          cyan = "#66CCCC";
+          white = "#DCDCCC";
+        };
+        
+        bright = {
+          black = "#7F7F7F";
+          red = "#F2777A";
+          green = "#99CC99";
+          yellow = "#FFCC66";
+          blue = "#6699CC";
+          magenta = "#CC99CC";
+          cyan = "#66CCCC";
+          white = "#FFFFFF";
+        };
+      };
+      
+      cursor = {
+        style = {
+          shape = "Beam";
+          blinking = "Off";
+        };
+      };
+    };
+  };
+  # targets.genericLinux.enable = true;
+  
+  # # Asegurarnos de tener las fuentes necesarias
+  # fonts.fontconfig.enable = true;
+
   # programs.kitty = {
   #   enable = true;
-    # settings = {
-    #   Fondo y transparencia
-    #   background = "#1E1E1E";
-    #   background_opacity = "0.90";  Ajusta entre 0.0 (transparente) y 1.0 (opaco)
-    #   Colores del tema Elegant Black
-    #   foreground = "#DCDCCC"; Texto principal
-    #   cursor = "#FFCC66";     Cursor amarillo
-    #   selection_foreground = "#DCDCCC";
-    #   selection_background = "#3A3A3A";
-    #   url_color = "#66CCCC";
-    #   Definición de colores ANSI
-    #   color0  = "#1E1E1E"; Negro
-    #   color1  = "#F2777A"; Rojo
-    #   color2  = "#99CC99"; Verde
-    #   color3  = "#FFCC66"; Amarillo
-    #   color4  = "#6699CC"; Azul
-    #   color5  = "#CC99CC"; Magenta
-    #   color6  = "#66CCCC"; Cian
-    #   color7  = "#DCDCCC"; Blanco/gris claro
-    #   color8  = "#7F7F7F"; Gris oscuro
-    #   color9  = "#F2777A"; Rojo brillante
-    #   color10 = "#99CC99"; Verde brillante
-    #   color11 = "#FFCC66"; Amarillo brillante
-    #   color12 = "#6699CC"; Azul brillante
-    #   color13 = "#CC99CC"; Magenta brillante
-    #   color14 = "#66CCCC"; Cian brillante
-    #   color15 = "#FFFFFF"; Blanco brillante
-    #   Fuente y tamaño de texto
-    #   font_family = "IBM Plex Mono";
-    #   font_size = 12;
-    #   Cursor como en Emacs (barra en lugar de bloque)
-    #   cursor_shape = "beam";
-    #   cursor_blink_interval = 0;
-    #   Color de subrayado como en Emacs
-    #   underline_color = "#FFCC66";
-    #   Bordes y márgenes
-    #   window_padding_width = 8;
-    #   inactive_text_alpha = 0.8;
-    # };
+  #   settings = {
+  #     # Fondo y transparencia
+  #     background = "#1E1E1E";
+  #     background_opacity = "0.90";
+  #     # Colores del tema Elegant Black
+  #     foreground = "#DCDCCC";
+  #     cursor = "#FFCC66";
+  #     selection_foreground = "#DCDCCC";
+  #     selection_background = "#3A3A3A";
+  #     url_color = "#66CCCC";
+  #     # Definición de colores ANSI
+  #     color0  = "#1E1E1E";
+  #     color1  = "#F2777A";
+  #     color2  = "#99CC99";
+  #     color3  = "#FFCC66";
+  #     color4  = "#6699CC";
+  #     color5  = "#CC99CC";
+  #     color6  = "#66CCCC";
+  #     color7  = "#DCDCCC";
+  #     color8  = "#7F7F7F";
+  #     color9  = "#F2777A";
+  #     color10 = "#99CC99";
+  #     color11 = "#FFCC66";
+  #     color12 = "#6699CC";
+  #     color13 = "#CC99CC";
+  #     color14 = "#66CCCC";
+  #     color15 = "#FFFFFF";
+  #     # Fuente y tamaño de texto
+  #     font_family = "IBM Plex Mono";
+  #     font_size = 12;
+  #     # Cursor como en Emacs (barra en lugar de bloque)
+  #     cursor_shape = "beam";
+  #     cursor_blink_interval = 0;
+  #     # Color de subrayado como en Emacs
+  #     underline_color = "#FFCC66";
+  #     # Bordes y márgenes
+  #     window_padding_width = 8;
+  #     inactive_text_alpha = 0.8;
+  #     linux_display_server = "x11";
+  #     url_style = "curly";
+  #   };
   # };
 
   nixpkgs.config.allowUnfree = true;
@@ -71,6 +148,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages =(with pkgs; [
+    obs-studio
     spotify
     ledger-live-desktop
     #  NOTE: Set the udev rules using sudo ./ledger-live/ledger-udev-setup.sh or
@@ -82,12 +160,24 @@
     aikenFlake.packages.${pkgs.system}.aiken
     
     nodejs_23
-    typescript
+    nodePackages.typescript
+    nodePackages.ts-node
     typescript-language-server
-  ]);
-    
-    
 
+    gnumake
+    gcc
+    
+  ]);
+  # home.sessionVariables = {
+  #   LIBGL_ALWAYS_SOFTWARE = "1";  # Usa renderizado por software
+  #   ALACRITTY_GL_BACKEND = "glx";  # Forzar el backend GLX
+  # };
+  # home.sessionVariables = {
+  #   KITTY_ENABLE_WAYLAND = 0;
+  #   GLF_IM_MODULE = "ibus";
+  #   LIBGL_ALWAYS_SOFTWARE = "1";
+  # };
+  
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   # home.file = {

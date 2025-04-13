@@ -1,7 +1,21 @@
 { lib, pkgs, ...}:
 
+let
+  my-aliases = {
+    ls = "eza --icons --group-directories-first --git -l --color=always --no-time --no-user --no-permissions --no-filesize";
+    cat = "bat";
+    htop = "btm";
+    fd = "fd -Lu";
+    w3m = "w3m -no-cookie -v";
+    neofetch = "disfetch";
+    fetch = "disfetch";
+    gitfetch = "onefetch";
+    cd = "z";
+    "," = "comma";
+    rb = "$HOME/personal/nixos-config/rebuild.sh";
+  };
+in
 {
-  #  TODO @luisantonioig: This configuration works so well, I think I can customize my zsh
   programs.zsh = {
     enable = true;
     # Aquí tus configuraciones específicas de zsh
@@ -17,7 +31,12 @@
       bindkey '^N' history-beginning-search-forward
       eval "$(fzf --zsh)"
       eval "$(zoxide init zsh)"
+      if [ -f "$HOME/.variables" ]; then
+        source "$HOME/.variables"
+      fi
+
     '';
+    shellAliases = my-aliases;
     plugins = [
       # Plugins que quieras usar
     ];
@@ -44,105 +63,3 @@
     [ -z "$ZSH_VERSION" ]     && exec "$SHELL" -l
   ''; 
 }
-
-# { lib, pkgs, ... }:
-# let
-
-#   # My shell aliases
-#   myAliases = {
-#     ls = "eza --icons --group-directories-first --git -l --color=always --no-time --no-user --no-permissions --no-filesize";
-#     cat = "bat";
-#     htop = "btm";
-#     fd = "fd -Lu";
-#     w3m = "w3m -no-cookie -v";
-#     neofetch = "disfetch";
-#     fetch = "disfetch";
-#     gitfetch = "onefetch";
-#     cd = "z";
-#     "," = "comma";
-#     rb = "$HOME/personal/nixos-config/rebuild.sh";
-#   };
-# in
-# {
-#   programs.zsh = {
-#     enable = true;
-#     autosuggestion.enable = true;
-#     syntaxHighlighting.enable = true;
-#     enableCompletion = true;
-#     shellAliases = myAliases;
-#     initExtra = ''
-#       PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
-#       %F{cyan}╰─%F{green}❯%f "
-
-#       RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
-
-#       [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
-
-#       bindkey '^P' history-beginning-search-backward
-#       bindkey '^N' history-beginning-search-forward
-#       eval "$(fzf --zsh)"
-#       eval "$(zoxide init zsh)"
-#     '';  
-#   };
-
-#   # programs.bash = {
-#   #   enable = true;
-#   #   # enableCompletion = true;
-#   #   # shellAliases = myAliases;
-#   #   # bashrcExtra = ''source ~/.config/programbs.bash'';
-#   # };
-
-#   #  NOTE @luisantonioig: This means that I am configuring on a non-Nixos Operating System
-#   targets.genericLinux.enable = true;
-
-#   home.packages = with pkgs; [
-#     vivid
-#     disfetch lolcat cowsay onefetch
-#     gnugrep gnused
-#     bat eza bottom fd bc
-#     direnv nix-direnv
-#     fzf zoxide ripgrep
-#     ibm-plex
-#   ];
-
-#   home.file.".bashrc".source = ../.bashrc;
-  
-#   home.file.".profile".text = ''
-#     # ~/.profile: executed by the command interpreter for login shells.
-    
-#     # Include user's private bin if it exists
-#     if [ -d "$HOME/bin" ] ; then
-#         PATH="$HOME/bin:$PATH"
-#     fi
-    
-#     if [ -d "$HOME/.local/bin" ] ; then
-#         PATH="$HOME/.local/bin:$PATH"
-#     fi
-    
-#     # Include Nix paths
-#     if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-#         . $HOME/.nix-profile/etc/profile.d/nix.sh
-#     fi
-    
-#     # Set Zsh as default shell
-#     export SHELL="${pkgs.zsh}/bin/zsh"
-#     [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
-#   '';
-
-#   programs.direnv.enable = true;
-#   programs.direnv.enableZshIntegration = true;
-#   programs.direnv.nix-direnv.enable = true;
-# }
-
-
-# { config, pkgs, ... }:
-# {   
-#   # # Instalar Emacs y configuraciones básicas
-#   programs.zsh = {
-#     enable = true;
-#     ];
-#   };
-#   home.file.".zshrc".source = builtins.path {
-#     path = ./.zshrc;
-#   };
-# }

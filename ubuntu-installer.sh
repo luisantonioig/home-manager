@@ -27,3 +27,6 @@ sudo apt install slack-desktop
 
 # Install emacs
 sudo apt install emacs
+
+# Install alacritty
+sudo apt install alacritty
