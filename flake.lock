@@ -200,8 +200,8 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1744646082,
-        "narHash": "sha256-5M3mh43ul4rDeAcYDQBuClJ+K2grC6wYbabvUSnClTM=",
+        "lastModified": 1744647141,
+        "narHash": "sha256-7s+87qOX0uCsKYgi+lznIu9jOEioWzg0EzUGwgFfqGU=",
         "path": "/home/antonio/personal/project-tracker",
         "type": "path"
       },
