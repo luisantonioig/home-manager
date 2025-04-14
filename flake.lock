@@ -101,11 +101,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744570807,
-        "narHash": "sha256-g07PYyZCIHVDLzRo8fllZRES7Nf9R8+xZwNJ7t0gt5s=",
+        "lastModified": 1744637364,
+        "narHash": "sha256-ZVINTNMJS6W3fqPYV549DSmjYQW5I9ceKBl83FwPP7k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "cfa196c705a896372319249d757085876ab62448",
+        "rev": "337541447773985f825512afd0f9821a975186be",
         "type": "github"
       },
       "original": {
@@ -200,8 +200,8 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1744577703,
-        "narHash": "sha256-XP1QXoLOQaNb4F6/O4XJ5Q7gAuit88wGAaRWOt2V2Xw=",
+        "lastModified": 1744646082,
+        "narHash": "sha256-5M3mh43ul4rDeAcYDQBuClJ+K2grC6wYbabvUSnClTM=",
         "path": "/home/antonio/personal/project-tracker",
         "type": "path"
       },
