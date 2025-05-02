@@ -19,7 +19,7 @@ in
   programs.zsh = {
     enable = true;
     # Aquí tus configuraciones específicas de zsh
-    initExtra = ''
+    initContent = ''
       # Configuraciones personalizadas
       PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
       %F{cyan}╰─%F{green}❯%f "

@@ -1,5 +1,6 @@
 { config, pkgs, aikenMode, ... }:
-{   
+{
+  services.emacs.enable = true;
   # # Instalar Emacs y configuraciones básicas
   programs.home-manager.enable = true;
   programs.emacs = {
