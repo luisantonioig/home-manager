@@ -39,62 +39,6 @@
 (add-hook 'json-mode-hook (lambda () (setq js-indent-level 2)))
 (setq js-indent-level 2)
 
-
-;; ;; typescript-mode and tsx-mode configuration
-;; (use-package typescript-mode
-;;   :ensure t
-;;   :mode ("\\.ts\\'" "\\.tsx\\'")
-;;   :custom
-;;   (typescript-indent-level 2))
-
-;; (use-package web-mode
-;;   :mode ("\\.js\\'" "\\.jsx\\'")
-;;   :hook ((web-mode . (lambda ()
-;;                        (setq indent-tabs-mode nil)
-;;                        (setq web-mode-markup-indent-offset 2)
-;;                        (setq web-mode-css-indent-offset 2)
-;;                        (setq web-mode-code-indent-offset 2))))
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode)))
-
-;; (use-package lsp-mode
-;;   :hook ((typescript-mode . lsp))
-;;   :commands lsp
-;;   :config
-;;   (setq lsp-clients-typescript-init-options '(hostInfo "Emacs"))
-;;   (setq lsp-eslint-auto-fix-on-save t)
-;;   (setq lsp-disabled-clients '()))
-
-;; ;; lsp-mode configuration
-;; (require 'lsp-mode)
-;; (add-hook 'typescript-mode-hook #'lsp)
-;; (add-hook 'tsx-mode-hook #'lsp)
-
-;; ;; lsp-ui-mode configuration
-;; (use-package lsp-ui
-;;   :after lsp-mode
-;;   :hook (lsp-mode . lsp-ui-mode)
-;;   :config
-;;   (setq lsp-ui-doc-enable t
-;;         lsp-ui-doc-position 'at-point
-;;         lsp-ui-doc-show-with-cursor t
-;;         lsp-ui-doc-show-with-mouse t
-;;         lsp-ui-peek-enable t
-;;         lsp-ui-sideline-enable t
-;;         lsp-ui-sideline-show-hover t
-;;         lsp-ui-sideline-show-code-actions t))
-;; ;; (require 'lsp-ui)
-;; ;; (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-
-
-;; Configuration for haskell-mode
-;; (use-package haskell-mode
-;;   :ensure t
-;;   ;; :hook (haskell-mode . interactive-haskell-mode)
-;;   :config
-;;   (setq haskell-process-type 'ghci)
-;;   (setq haskell-process-log t))
-
 (use-package lsp-haskell
   :ensure t
   :hook (haskell-mode . lsp)
@@ -219,51 +163,6 @@
 ;; Agregar la tecla a la lista de atajos mostrados en el dashboard
 (add-to-list 'dashboard-item-shortcuts '(todos . "t"))
 
-;; ;; (use-package dashboard
-;; ;;   :ensure t
-;; ;;   :config
-;; ;;   (dashboard-setup-startup-hook)
-;; ;;   (setq dashboard-items '((recents   . 10)  ;; Mostrar 10 archivos recientes
-;; ;;                           (bookmarks . 5)   ;; Mostrar 5 marcadores
-;; ;;                           (projects  . 5)   ;; Mostrar 5 proyectos recientes
-;; ;;                           (agenda    . 5))) ;; Mostrar 5 eventos del calendario
-;; ;;   (setq dashboard-projects-backend 'projectile)
-;; ;;   (setq dashboard-banner-logo-title "Bienvenido a Emacs 🚀")
-;; ;;   (setq dashboard-startup-banner 'official)  ;; Usa el logo oficial de Emacs
-;; ;;   (setq dashboard-center-content t)          ;; Centrar contenido
-;; ;;   (setq dashboard-set-heading-icons t)       ;; Agrega iconos a las secciones
-;; ;;   (setq dashboard-set-file-icons t))         ;; Usa iconos en la lista de archivos recientes
-
-;; ;; (defun dashboard-insert-todo-files (list-size)
-;; ;;   "Insertar una lista de archivos con 'TODO' en el Dashboard usando ripgrep (rg)."
-;; ;;   (let* ((default-directory (or (ignore-errors (projectile-project-root)) default-directory))
-;; ;;          (command "rg --files-with-matches --no-messages TODO . -g '!.git' -g '!node_modules' -g '!.cache'")
-;; ;;          (output (shell-command-to-string command))
-;; ;;          (todo-files (split-string output "\n" t))) ;; Dividir la salida en líneas
-
-;; ;;     ;; 🔹 Mensajes de depuración
-;; ;;     (message "=== DEBUG: Output de rg ===\n%s" output)
-;; ;;     (message "=== DEBUG: Archivos encontrados ===\n%S" todo-files)
-
-;; ;;     (when todo-files
-;; ;;       (dashboard-insert-section
-;; ;;        "Archivos con TODOs:"
-;; ;;        (cl-subseq todo-files 0 (min (length todo-files) list-size))
-;; ;;        list-size
-;; ;;        'todos
-;; ;;        "t"
-;; ;;        'identity)))) ;; 🔹 Cambiado de 'dashboard-insert-file' a 'identity'
-
-
-
-
-
-;; ;; ;; Agregar la nueva sección después de que `dashboard` se haya cargado
-;; ;; (with-eval-after-load 'dashboard
-;; ;;   (add-to-list 'dashboard-item-generators '(todos . dashboard-insert-todo-files))
-;; ;;   (add-to-list 'dashboard-items '(todos . 5))) ;; Muestra hasta 5 archivos con TODOs
-
-
 ;; Search stack
 (use-package vertico
   :ensure t
@@ -350,22 +249,6 @@
 ;; Asociar extensiones de archivo
 (add-to-list 'auto-mode-alist '("\\.ak\\'" . aiken-mode))
 
-;; Activar LSP al abrir archivos Aiken
-; TODO @luisantonioig: Make tree-sitter to work (again)
-;; (add-hook 'aiken-mode-hook #'lsp)
-
-;; (add-to-list 'lsp-language-id-configuration '(aiken-mode . "aiken"))
-
-
-;; ;; (require 'tree-sitter)
-;; ;; (require 'tree-sitter-langs)
-
-;; ;; (global-tree-sitter-mode)
-
-;; ;; (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-
-;; ;; (add-hook 'typescript-mode-hook #'tree-sitter-mode)
-
 
 (use-package markdown-mode
   :ensure t
@@ -411,6 +294,10 @@
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
+
+(use-package prettier-js
+  :hook ((typescript-ts-mode . prettier-js-mode)
+         (tsx-ts-mode . prettier-js-mode)))
 
 (defun my/typescript-treesit-fontlock ()
   "Configurar resaltado sintáctico para TypeScript con tree-sitter."
@@ -516,141 +403,6 @@
 ;;;;;;;;;;;;;;;;;;;
 ;; From my theme ;;
 ;;;;;;;;;;;;;;;;;;;
-
-;; ;; ;; Estas configuraciones deberían estar en init.el, no en el tema
-
-;; ;; Configuración de transparencia
-;; (set-frame-parameter (selected-frame) 'alpha '(95 . 95))
-;; (add-to-list 'default-frame-alist '(alpha . (95 . 95)))
-
-;; ;; Configuración de fuente
-;; ;; (set-frame-font "IBM Plex Mono" nil t)
-
-;; ;; Configuración del cursor
-;; (blink-cursor-mode 1)
-;; (setq-default cursor-type '(bar . 2))
-;; (setq blink-cursor-blinks 0)
-;; (setq idle-update-delay 1.0)
-
-;; (defun my-cursor-update ()
-;;   "Cambia el color del cursor según el estado del buffer."
-;;   (if (buffer-modified-p)
-;;       (set-cursor-color "#F2777A") ;; Rojo si hay cambios sin guardar
-;;     (set-cursor-color "#FFCC66"))) ;; Amarillo si todo está guardado
-
-;; (add-hook 'post-command-hook #'my-cursor-update)
-
-;; ;; Paquete beacon
-;; (use-package beacon
-;;   :ensure t
-;;   :config
-;;   (setq beacon-color "#6699CC")
-;;   (setq beacon-size 40)
-;;   (setq beacon-blink-duration 0.2)
-;;   (beacon-mode 1))
-
-;; ;; Ajuste de cursor según velocidad de escritura
-;; (defvar my-cursor-timer nil)
-;; (defvar my-cursor-speed-threshold 0.1)
-
-;; (defun my-adjust-cursor-size ()
-;;   "Ajusta el tamaño del cursor según la velocidad de escritura."
-;;   (when my-cursor-timer
-;;     (cancel-timer my-cursor-timer))
-;;   (setq my-cursor-timer
-;;         (run-with-timer my-cursor-speed-threshold nil
-;;                         (lambda ()
-;;                           (if (input-pending-p)
-;;                               (setq cursor-type '(bar . 5))
-;;                             (setq cursor-type '(bar . 2)))))))
-
-;; (add-hook 'post-command-hook #'my-adjust-cursor-size)
-
-;; ;; Configuración de doom-modeline
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :init (doom-modeline-mode 1)
-;;   :config
-;;   (setq doom-modeline-height 35)
-;;   (setq doom-modeline-bar-width 3)
-;;   (setq doom-modeline-hud t)
-;;   (setq doom-modeline-buffer-encoding nil)
-;;   (setq doom-modeline-time t)
-;;   (setq doom-modeline-vcs t)
-;;   (setq doom-modeline-lsp t)
-;;   (setq doom-modeline-env-version t)
-;;   (setq doom-modeline-buffer-state-icon t)
-;;   (setq doom-modeline-modal-icon t))
-
-;; ;; Configuración de números de línea
-;; (setq display-line-numbers-type 'visual)
-;; (custom-set-faces
-;;  '(line-number ((t (:foreground "#7F7F7F" :background "#1E1E1E"))))
-;;  '(line-number-current-line ((t (:foreground "#FFCC66" :weight bold)))))
-
-;; (set-face-attribute 'line-number nil :height 200)
-;; (set-face-attribute 'line-number-current-line nil :height 110)
-
-;; (dolist (mode '(eshell-mode-hook
-;;                 shell-mode-hook
-;;                 term-mode-hook
-;;                 dashboard-mode-hook))
-;;   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-;; (add-hook 'find-file-hook
-;;           (lambda ()
-;;             (when (> (buffer-size) 500000)
-;;               (display-line-numbers-mode -1))))
-
-;; (set-frame-font "IBM Plex Mono-12" nil t)
-
-;; ;; Solución específica para IBM Plex Mono
-;; (defun fix-ibm-plex-mono (&optional frame)
-;;   "Configura IBM Plex Mono correctamente."
-;;   (interactive)
-;;   (with-selected-frame (or frame (selected-frame))
-;;     (when (display-graphic-p)
-;;       ;; Usar nombres de fuente específicos con diagnóstico
-;;       (let ((method-used "ninguno"))
-;;         ;; Primer intento: sintaxis normal
-;;         (condition-case nil
-;;             (progn
-;;               (set-frame-font "IBM Plex Mono-12" nil t)
-;;               (setq method-used "sintaxis normal"))
-;;           (error
-;;            ;; Segundo intento: sintaxis XLFD
-;;            (condition-case nil
-;;                (progn
-;;                  (set-frame-font "-*-IBM Plex Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" nil t)
-;;                  (setq method-used "sintaxis XLFD"))
-;;              (error
-;;               ;; Último recurso: font-spec
-;;               (let ((fs (font-spec :family "IBM Plex Mono" :size 12)))
-;;                 (set-frame-parameter nil 'font fs)
-;;                 (set-face-attribute 'default nil :font fs)
-;;                 (setq method-used "font-spec"))))))
-        
-;;         ;; Mostrar qué método funcionó
-;;         (message "Fuente configurada usando método: %s" method-used)
-;;         (with-current-buffer (get-buffer-create "*Font Method*")
-;;           (erase-buffer)
-;;           (insert (format "Fuente configurada usando método: %s\n" method-used))
-;;           (insert (format "Hora: %s\n" (current-time-string)))
-;;           (insert (format "Frame: %s\n" (frame-parameter nil 'name)))
-;;           (insert (format "Daemon: %s\n" (if (daemonp) "sí" "no")))))
-      
-;;       ;; También configurar la fuente para la modeline
-;;       (set-face-attribute 'mode-line nil :height 200)
-;;       (set-face-attribute 'mode-line-inactive nil :height 200))))
-
-;; ;; Ejecutar al inicio y para cada nuevo frame
-;; (add-hook 'after-init-hook 'fix-ibm-plex-mono)
-;; (add-hook 'server-after-make-frame-hook 'fix-ibm-plex-mono)
-;; (add-hook 'after-make-frame-functions 'fix-ibm-plex-mono)
-
-;; ;; Para el daemon, también usar un timer
-;; (when (daemonp)
-;;   (run-with-timer 1 nil 'fix-ibm-plex-mono))
 
 ;; Añade esto a tu init.el
 (defun my-setup-fonts (&optional frame)

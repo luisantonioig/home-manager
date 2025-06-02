@@ -8,7 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    aikenFlake.url = "github:luisantonioig/aiken";
+    aikenFlake.url = "github:aiken-lang/aiken";
     aikenMode = {
       url = "github:luisantonioig/aiken-mode/ac165240a4a25314b7a2891840059d99f30f35f8";
       inputs.nixpks.follows = "nixpkgs";

@@ -148,6 +148,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages =(with pkgs; [
+    gimp
     obs-studio
     spotify
     ledger-live-desktop
@@ -160,9 +161,10 @@
     aikenFlake.packages.${pkgs.system}.aiken
     project-tracker.packages.${pkgs.system}.default
 
-    nodejs_23
+    nodejs
     nodePackages.typescript
     nodePackages.ts-node
+    nodePackages.prettier
     typescript-language-server
 
     gnumake
