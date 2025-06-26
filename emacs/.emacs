@@ -9,6 +9,10 @@
 (add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
+(setq backup-directory-alist `((".*" . "~/.emacs.d/backups/")))
+(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
+
+
 (setq-default header-line-format nil)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -225,30 +229,39 @@
 (setq doom-modeline-env-version nil) ;; Ocultar versiones de entorno como Python o Node
 
 ;; Aiken support
-(require 'aiken-mode)
 
-;; lsp-mode for aiken
-(require 'lsp-mode)
-
-;; Definición simplificada del cliente
-(lsp-register-client
- (make-lsp-client
-  :new-connection (lsp-stdio-connection
-                   (lambda ();
-                     (list "aiken" "lsp" "--stdio")))
-  :major-modes '(aiken-mode)
-  :server-id 'aiken-ls))
-
-;; Creación del modo si no existe
-(unless (fboundp 'aiken-mode)
-  (define-derived-mode aiken-mode prog-mode "Aiken"
-    "Major mode for editing Aiken files."
-    (setq-local comment-start "--")
-    (setq-local comment-end "")))
 
 ;; Asociar extensiones de archivo
 (add-to-list 'auto-mode-alist '("\\.ak\\'" . aiken-mode))
 
+(require 'lsp-mode)
+
+;; Definición del cliente LSP
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection
+                   (lambda ()
+                     (list "aiken" "lsp" "--stdio")))
+  :major-modes '(aiken-mode)
+  :server-id 'aiken-ls))
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-language-id-configuration '(aiken-mode . "aiken")))
+
+
+(add-hook 'aiken-mode-hook #'lsp)
+
+(use-package reformatter
+  :ensure t)
+
+(reformatter-define aiken-format
+  :program "aiken"
+  :args '("fmt" "--stdin")
+  :stdin t)
+
+(add-hook 'aiken-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'aiken-format-buffer nil t)))
 
 (use-package markdown-mode
   :ensure t

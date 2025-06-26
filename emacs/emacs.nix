@@ -9,6 +9,7 @@
       withTreeSitter = true;
     };
     extraPackages = epkgs: [
+      epkgs.reformatter
       epkgs.markdown-mode
       epkgs.magit
 	    epkgs.company
@@ -47,7 +48,8 @@
       epkgs.orderless
       epkgs.consult
 
-      aikenMode.packages.${pkgs.system}.default
+      # aikenMode.packages.${pkgs.system}.default
+      epkgs.aiken-mode
       epkgs.htmlize
 
 
