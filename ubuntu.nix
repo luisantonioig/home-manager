@@ -1,4 +1,4 @@
-{ config, pkgs, aikenFlake, aikenMode, project-tracker, ... }:
+{ config, pkgs, aikenFlake, aikenMode, project-tracker, cardanoNodeFlake, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -160,12 +160,18 @@
     
     aikenFlake.packages.${pkgs.system}.aiken
     project-tracker.packages.${pkgs.system}.default
+    cardanoNodeFlake.packages.${pkgs.system}.cardano-node
+    cardanoNodeFlake.packages.${pkgs.system}.cardano-cli
 
     nodejs
     nodePackages.typescript
     nodePackages.ts-node
     nodePackages.prettier
+    # Language servers
+    jdt-language-server
     typescript-language-server
+    bash-language-server
+    nil
 
     gnumake
     gcc

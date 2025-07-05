@@ -1,4 +1,4 @@
-{ lib, pkgs, ...}:
+{ pkgs, ...}:
 
 let
   my-aliases = {
@@ -57,7 +57,6 @@ in
     fzf zoxide ripgrep
     ibm-plex
   ];
-  
   home.file.".profile".text = ''
     export SHELL="${pkgs.zsh}/bin/zsh"
     [ -z "$ZSH_VERSION" ]     && exec "$SHELL" -l

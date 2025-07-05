@@ -460,3 +460,58 @@
           (lambda ()
             (when (and (daemonp) (get-buffer "*dashboard*"))
               (dashboard-refresh-buffer))))
+
+
+;; Configuración para archivos .sh
+;; Activar sh-mode para scripts de shell y configurar automáticamente
+(use-package sh-script
+  :ensure nil  ;; sh-script ya viene con Emacs, no hace falta instalarlo
+  :mode (("\\.\\(sh\\|bash\\|zsh\\)$" . sh-mode))  ;; asociar extensiones comunes
+  :hook
+  ((sh-mode . lsp)                     ;; iniciar lsp-mode en sh-mode
+   (sh-mode . flycheck-mode)           ;; habilitar flycheck (shellcheck) en sh-mode
+   (sh-mode . shfmt-on-save-mode)      ;; formatear automáticamente al guardar
+   (sh-mode . (lambda ()               ;; configuraciones extra al entrar a sh-mode
+                (setq indent-tabs-mode nil)     ;; usa espacios en lugar de tabs
+                (setq sh-basic-offset 2)        ;; nivel de sangría de 2 espacios
+                (setq sh-indentation 2)))))     ;; sangrado consistente
+
+;; Cliente LSP
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :init
+  (setq lsp-keymap-prefix "C-c l")  ;; prefijo para atajos de lsp
+  :config
+  (setq lsp-enable-snippet nil))    ;; no usar snippets por defecto
+
+;; Formateador de shell
+(use-package shfmt
+  :ensure t
+  :commands (shfmt-on-save-mode))
+
+;; Linter shellcheck a través de flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode t))
+
+;; Configuración para nix
+;; Modo mayor para nix
+(use-package nix-mode
+  :ensure t
+  :mode "\\.nix\\'"
+  :hook (nix-mode . lsp))
+
+;; LSP para nix (usa nil como servidor)
+(use-package lsp-mode
+  :ensure t
+  :commands lsp)
+
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((java-mode . lsp))
+  :commands lsp
+  :config
+  (setq lsp-prefer-flymake nil))
+

@@ -51,6 +51,9 @@
       # aikenMode.packages.${pkgs.system}.default
       epkgs.aiken-mode
       epkgs.htmlize
+      epkgs.shfmt
+      epkgs.lsp-java
+      
 
 
     ];

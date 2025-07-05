@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     aikenFlake.url = "github:aiken-lang/aiken";
+    cardanoNodeFlake.url = "github:IntersectMBO/cardano-node";
     aikenMode = {
       url = "github:luisantonioig/aiken-mode/ac165240a4a25314b7a2891840059d99f30f35f8";
       inputs.nixpks.follows = "nixpkgs";
@@ -16,7 +17,7 @@
     project-tracker.url = "path:/home/antonio/personal/project-tracker";
   };
 
-  outputs = inputs@{ project-tracker, aikenFlake, aikenMode, nixpkgs, home-manager, ... }:
+  outputs = inputs@{ cardanoNodeFlake, project-tracker, aikenFlake, aikenMode, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -31,6 +32,7 @@
           inherit aikenFlake;
           inherit aikenMode;
           inherit project-tracker;
+          inherit cardanoNodeFlake;
         };
         modules = [ ./ubuntu.nix ];
       };
