@@ -1017,8 +1017,13 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1751820908,
         "narHash": "sha256-eOpzIKzwLMmKterOBW2IdCW+tYgYacF3teAGhlnDS0g=",
+=======
+        "lastModified": 1751819970,
+        "narHash": "sha256-mP3uxHt6/jfUN5w7BL0lhWSwzZIkVBgJXT8YmExfbtA=",
+>>>>>>> 3ca8411 (Flake changed)
         "path": "/home/antonio/personal/project-tracker",
         "type": "path"
       },
