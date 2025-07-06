@@ -203,11 +203,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1751466032,
-        "narHash": "sha256-btLqafq6DajyNIgkY+KSj9Vv+WkYCcRgGDFExhOLsHA=",
+        "lastModified": 1751485610,
+        "narHash": "sha256-T1zCBQvWj/zq2luUpxVyoBRqEHpsxXGhOckYNxMTZoE=",
         "owner": "IntersectMBO",
         "repo": "cardano-node",
-        "rev": "55f8516dae96bc76863bdebab7ef9e97b2f7e512",
+        "rev": "bbb00f31b6070c2100f4803c5ae40ac94f7db048",
         "type": "github"
       },
       "original": {
@@ -715,11 +715,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751476662,
-        "narHash": "sha256-eX6wMGQjaTzedR6lz2IpEnAMgLcuQLQezBJNil7yG3s=",
+        "lastModified": 1751751054,
+        "narHash": "sha256-qUEejOOj1jc+y5anxDgay+NqVgLHVeY0So5PEDzlV18=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9347c61bc0cbed0d2062b930144c2cbd557f9189",
+        "rev": "af8a884164bb50ad34c09719bdbdb2a1b01b917c",
         "type": "github"
       },
       "original": {
@@ -948,11 +948,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1751271578,
-        "narHash": "sha256-P/SQmKDu06x8yv7i0s8bvnnuJYkxVGBWLWHaU+tt4YY=",
+        "lastModified": 1751637120,
+        "narHash": "sha256-xVNy/XopSfIG9c46nRmPaKfH1Gn/56vQ8++xWA8itO4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3016b4b15d13f3089db8a41ef937b13a9e33a8df",
+        "rev": "5c724ed1388e53cc231ed98330a60eb2f7be4be3",
         "type": "github"
       },
       "original": {
@@ -964,11 +964,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1751271578,
-        "narHash": "sha256-P/SQmKDu06x8yv7i0s8bvnnuJYkxVGBWLWHaU+tt4YY=",
+        "lastModified": 1751637120,
+        "narHash": "sha256-xVNy/XopSfIG9c46nRmPaKfH1Gn/56vQ8++xWA8itO4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3016b4b15d13f3089db8a41ef937b13a9e33a8df",
+        "rev": "5c724ed1388e53cc231ed98330a60eb2f7be4be3",
         "type": "github"
       },
       "original": {
@@ -1017,8 +1017,8 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1751467004,
-        "narHash": "sha256-J5RKiQxcU/c+p2tF2fljfKO76pQr+vz7GWoceVHlR3s=",
+        "lastModified": 1751757891,
+        "narHash": "sha256-1izKbWdbP3UQVMSaHwC6Wa784YPPwBpgVsgdW02vkqc=",
         "path": "/home/antonio/personal/project-tracker",
         "type": "path"
       },
