@@ -175,6 +175,9 @@
 
     gnumake
     gcc
+
+    # to compile the mastering cardano book
+    bundler
     
   ]);
   # home.sessionVariables = {
