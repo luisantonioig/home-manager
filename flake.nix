@@ -14,10 +14,15 @@
       url = "github:luisantonioig/aiken-mode/ac165240a4a25314b7a2891840059d99f30f35f8";
       inputs.nixpks.follows = "nixpkgs";
     };
+    
+    # nix-your-shell = {
+    #   url = "github:MercuryTechnologies/nix-your-shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     project-tracker.url = "path:/home/antonio/personal/project-tracker";
   };
 
-  outputs = inputs@{ cardanoNodeFlake, project-tracker, aikenFlake, aikenMode, nixpkgs, home-manager, ... }:
+  outputs = { cardanoNodeFlake, project-tracker, aikenFlake, aikenMode, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};

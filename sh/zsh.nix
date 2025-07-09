@@ -31,6 +31,9 @@ in
       bindkey '^N' history-beginning-search-forward
       eval "$(fzf --zsh)"
       eval "$(zoxide init zsh)"
+      if command -v nix-your-shell > /dev/null; then
+        nix-your-shell zsh | source /dev/stdin
+      fi
       if [ -f "$HOME/.variables" ]; then
         source "$HOME/.variables"
       fi
