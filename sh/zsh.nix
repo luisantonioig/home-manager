@@ -22,8 +22,8 @@ in
     initContent = ''
       function set_prompt() {
         if [[ "$IN_NIX_SHELL" == "pure" || "$IN_NIX_SHELL" == "impure" ]]; then
-          PROMPT="%F{red}╭─[DEVELOPER-MODE]%f %F{red}%~%f
-      %F{red}╰─%F{red}❯%f "
+          PROMPT="%F{red}╭─[🛠 DEVELOPER-MODE]%f %F{red}%~%f
+      %F{red}╰─%F{red}λ%f "
         else
           PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
       %F{cyan}╰─%F{green}❯%f "
