@@ -20,10 +20,19 @@ in
     enable = true;
     # Aquí tus configuraciones específicas de zsh
     initContent = ''
-      # Configuraciones personalizadas
-      PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
+      function set_prompt() {
+        if [[ "$IN_NIX_SHELL" == "pure" || "$IN_NIX_SHELL" == "impure" ]]; then
+          PROMPT="%F{red}╭─[DEVELOPER-MODE]%f %F{red}%~%f
+      %F{red}╰─%F{red}❯%f "
+        else
+          PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
       %F{cyan}╰─%F{green}❯%f "
-      # RPROMPT="%F{red}▂%f%F{yellow}▄%f%F{green}▆%f%F{cyan}█%f%F{blue}▆%f%F{magenta}▄%f%F{white}▂%f"
+        fi
+      }
+
+      set_prompt
+
+      precmd_functions+=(set_prompt)
 
       [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
 
@@ -37,7 +46,6 @@ in
       if [ -f "$HOME/.variables" ]; then
         source "$HOME/.variables"
       fi
-
     '';
     shellAliases = my-aliases;
     plugins = [
