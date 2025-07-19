@@ -149,7 +149,8 @@
   # environment.
   home.packages =(with pkgs; [
     nix-your-shell
-    gimp
+    # gimp does not work correctly
+    # gimp
     obs-studio
     spotify
     ledger-live-desktop
