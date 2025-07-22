@@ -31,8 +31,11 @@
       homeConfigurations."antonio" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
+        extraSpecialArgs = { 
+          currentProfile = "antonio";
+        };
       };
-      homeConfigurations.ubuntu = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.haskell96 = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
           inherit image-viewer;
@@ -40,6 +43,18 @@
           # inherit aikenMode;
           inherit project-tracker;
           inherit cardanoNodeFlake;
+          currentProfile = "haskell96";
+        };
+        modules = [ ./haskell96.nix ];
+      };
+      homeConfigurations.ubuntu = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit image-viewer;
+          inherit aikenFlake;
+          inherit project-tracker;
+          inherit cardanoNodeFlake;
+          currentProfile = "ubuntu";
         };
         modules = [ ./ubuntu.nix ];
       };

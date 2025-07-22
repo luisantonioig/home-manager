@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, currentProfile, ...}:
 
 let
   my-aliases = {
@@ -25,7 +25,7 @@ in
           PROMPT="%F{red}╭─[🛠 DEVELOPER-MODE]%f %F{red}%~%f
       %F{red}╰─%F{red}λ%f "
         else
-          PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}%m%f %F{yellow}%~%f
+          PROMPT="%F{cyan}╭─%F{magenta}%n%f@%F{blue}${currentProfile}%f %F{yellow}%~%f
       %F{cyan}╰─%F{green}❯%f "
         fi
       }
