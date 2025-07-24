@@ -153,8 +153,8 @@
     aikenFlake.packages.${pkgs.system}.aiken
     image-viewer.packages.${pkgs.system}.default
     project-tracker.packages.${pkgs.system}.default
-    cardanoNodeFlake.packages.${pkgs.system}.cardano-node
-    cardanoNodeFlake.packages.${pkgs.system}.cardano-cli
+    # cardanoNodeFlake.packages.${pkgs.system}.cardano-node
+    # cardanoNodeFlake.packages.${pkgs.system}.cardano-cli
 
     nodejs
     nodePackages.typescript

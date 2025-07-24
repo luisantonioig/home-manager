@@ -58,5 +58,16 @@
         };
         modules = [ ./ubuntu.nix ];
       };
+      homeConfigurations.rare-evo-2025 = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit image-viewer;
+          inherit aikenFlake;
+          inherit project-tracker;
+          inherit cardanoNodeFlake;
+          currentProfile = "rare-evo-2025";
+        };
+        modules = [ ./rare-evo-2025.nix ];
+      };
     };
 }
