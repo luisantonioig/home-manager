@@ -9,8 +9,7 @@
     (./git/git.nix)
     (./emacs/emacs.nix)
     (./sh/zsh.nix)
-    (./google-chrome/google-chrome.nix)
-    
+    (./google-chrome/google-chrome.nix)    
   ];
 
   # This value determines the Home Manager release that your configuration is
