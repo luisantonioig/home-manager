@@ -25,11 +25,13 @@
       epkgs.flycheck
       epkgs.projectile
       epkgs.doom-modeline
+      
       epkgs.nerd-icons
       epkgs.dashboard
       epkgs.dash
       epkgs.dash-functional
 
+      epkgs.prettier-js
       epkgs.typescript-mode
       epkgs.web-mode
       # (epkgs.tree-sitter.overrideAttrs (old: {

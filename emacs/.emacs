@@ -9,6 +9,11 @@
 (add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 (setq backup-directory-alist `((".*" . "~/.emacs.d/backups/")))
 (setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
 
@@ -286,9 +291,9 @@
 
 
 
-;;;;;;;;;;;;;;;;;
-;; Experimento ;;
-;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;
+;; ;; Experimento ;;
+;; ;;;;;;;;;;;;;;;;;
 
 (use-package treesit
   :ensure nil  ;; Integrado en Emacs 29+
@@ -309,6 +314,7 @@
 
 
 (use-package prettier-js
+  :ensure nil
   :hook ((typescript-ts-mode . prettier-js-mode)
          (tsx-ts-mode . prettier-js-mode)))
 
@@ -363,7 +369,7 @@
   (setq lsp-typescript-suggest-complete-function-calls t)
   (setq lsp-typescript-format-enable t)
   
-  ;; Configuración de performance
+  ;;Configuración de performance
   (setq lsp-idle-delay 0.5)
   (setq lsp-log-io nil)
   (setq lsp-completion-provider :capf)
@@ -371,24 +377,27 @@
   
   ;; Configuración específica para TypeScript
   (setq lsp-typescript-preferences-import-module-specifier 'relative)
-  (setq lsp-typescript-surveys-enabled nil))
+  (setq lsp-typescript-surveys-enabled nil)
+  (setq lsp-disabled-code-actions '("source.organizeImports"))
 
-(use-package company
-  :ensure t
-  :hook (lsp-mode . company-mode)
-  :config
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.1))
+  )
 
-(add-hook 'typescript-ts-mode-hook
-          (lambda ()
-            (my/typescript-treesit-fontlock)
-            (my/typescript-treesit-indent)))
+;; (use-package company
+;;   :ensure t
+;;   :hook (lsp-mode . company-mode)
+;;   :config
+;;   (setq company-minimum-prefix-length 1)
+;;   (setq company-idle-delay 0.1))
 
-(add-hook 'tsx-ts-mode-hook
-          (lambda ()
-            (my/typescript-treesit-fontlock)
-            (my/typescript-treesit-indent)))
+;; (add-hook 'typescript-ts-mode-hook
+;;           (lambda ()
+;;             (my/typescript-treesit-fontlock)
+;;             (my/typescript-treesit-indent)))
+
+;; (add-hook 'tsx-ts-mode-hook
+;;           (lambda ()
+;;             (my/typescript-treesit-fontlock)
+;;             (my/typescript-treesit-indent)))
 
 
 (defun my/ts-next-definition ()
@@ -501,17 +510,3 @@
   :ensure t
   :mode "\\.nix\\'"
   :hook (nix-mode . lsp))
-
-;; LSP para nix (usa nil como servidor)
-(use-package lsp-mode
-  :ensure t
-  :commands lsp)
-
-
-(use-package lsp-mode
-  :ensure t
-  :hook ((java-mode . lsp))
-  :commands lsp
-  :config
-  (setq lsp-prefer-flymake nil))
-

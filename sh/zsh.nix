@@ -57,7 +57,7 @@ in
   home.sessionVariables = {
     SHELL = "${pkgs.zsh}/bin/zsh";
   };
-  programs.bash.enable = true;
+  programs.bash.enable = false;
   targets.genericLinux.enable = true;
   home.packages = with pkgs; [
     vivid
@@ -68,8 +68,4 @@ in
     fzf zoxide ripgrep
     ibm-plex
   ];
-  home.file.".profile".text = ''
-    export SHELL="${pkgs.zsh}/bin/zsh"
-    [ -z "$ZSH_VERSION" ]     && exec "$SHELL" -l
-  ''; 
 }
