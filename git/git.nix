@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, ... }:
+{ pkgs, ... }:
 
 {
   home.packages = [ pkgs.git ];

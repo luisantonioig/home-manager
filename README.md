@@ -37,3 +37,7 @@ nix flake update
 - Mantener modulos pequenos y composables.
 - Evitar duplicar bloques grandes entre perfiles.
 - Evitar dependencias impuras salvo que sean estrictamente necesarias.
+
+## Historial de cambios
+
+- Ver `CHANGELOG.md` para el registro detallado de cambios del proyecto.

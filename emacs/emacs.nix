@@ -1,4 +1,4 @@
-{ config, pkgs, aikenMode, ... }:
+{ pkgs, ... }:
 {
   services.emacs.enable = true;
   # # Instalar Emacs y configuraciones básicas

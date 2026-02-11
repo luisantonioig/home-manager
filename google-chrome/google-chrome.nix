@@ -6,16 +6,11 @@
     pkgs.google-chrome
   ];
 
-  # Configura Bash con alias personalizados para Chrome
-  programs.bash = {
-    enable = true;
-  };
-
   # Modifica el acceso directo de Google Chrome para usar aceleración
   xdg.desktopEntries.google-chrome = {
     name = "Google Chrome";
     genericName = "Web Browser";
-    exec = "google-chrome-stable --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --ignore-gpu-blocklist --enable-accelerated-video-decode --no-sandbox %U";
+    exec = "google-chrome-stable --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --ignore-gpu-blocklist --enable-accelerated-video-decode %U";
     terminal = false;
     icon = "google-chrome";
     type = "Application";
@@ -39,8 +34,4 @@
     DEFAULT_BROWSER = "${pkgs.google-chrome}/bin/google-chrome-stable";
   };
 
-  # Agregar alias global para Chrome con aceleración activada
-  programs.bash.profileExtra = ''
-    alias google-chrome="google-chrome-stable --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --ignore-gpu-blocklist --enable-accelerated-video-decode --no-sandbox"
-  '';
 }

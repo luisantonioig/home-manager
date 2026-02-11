@@ -59,10 +59,10 @@ in
   };
   home.sessionVariables = {
     SHELL = "${pkgs.zsh}/bin/zsh";
-    COMPACT_HOME = "/home/antonio/compact/binaries";
+    COMPACT_HOME = "/home/antonio/compact_binaries";
   };
   home.sessionPath = [
-    "$HOME:$COMPACT_HOME"
+    "$COMPACT_HOME"
   ];
   programs.bash.enable = false;
   targets.genericLinux.enable = true;
