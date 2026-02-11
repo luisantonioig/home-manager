@@ -1,9 +1,112 @@
+;;; Code:
+;; Transparencia (ligero glass-morphism sobrio)
+(set-frame-parameter (selected-frame) 'alpha-background 95)
+(add-to-list 'default-frame-alist '(alpha-background . 95))
+
+;; Fuente (opcional, pero muy elegante)
+;; (set-frame-font "IBM Plex Mono-12" nil t)
+
+;; Cursor “inteligente”
+(setq indicate-buffer-boundaries 'left)  ;; marcas sutiles en el fringe izquierdo
+(blink-cursor-mode 1)
+(setq-default cursor-type '(bar . 2))
+(setq blink-cursor-blinks 0)
+(setq which-func-update-delay 1.0)
+
+;; Barra tipo VSCode en el fringe derecho
+(use-package yascroll
+  :ensure t
+  :config
+  ;; Mostrar la barrita en el fringe derecho
+  (setq yascroll:scroll-bar 'right-fringe)
+
+  ;; Que desaparezca si no estás moviéndote
+  (setq yascroll:delay-to-hide 0.5)
+
+  ;; Activar globalmente
+  (global-yascroll-bar-mode 1)
+
+  ;; Colores integrados con la paleta "Obsidian Noir"
+  ;; accent      → #FFD479
+  ;; bg-alt2     → #1C1C20
+  (set-face-attribute 'yascroll:thumb-fringe nil
+                      :background "#FFD479"  ; posición actual (acento dorado)
+                      :foreground "#FFD479"))
+
+;; Cursor que refleja el estado del buffer
+(defun my-cursor-update ()
+  "Cambia el color del cursor según el estado del buffer."
+  (if (buffer-modified-p)
+      (set-cursor-color "#E87A7A")  ;; red elegante si hay cambios sin guardar
+    (set-cursor-color "#FFD479"))) ;; dorado/acento si todo está guardado
+
+(add-hook 'post-command-hook #'my-cursor-update)
+
+(defvar my-cursor-timer nil)
+(defvar my-cursor-speed-threshold 0.1) ;; segundos para detectar rapidez
+
+(defun my-adjust-cursor-size ()
+  "Ajusta el tamaño del cursor según la velocidad de escritura."
+  (when my-cursor-timer
+    (cancel-timer my-cursor-timer))
+  (setq my-cursor-timer
+        (run-with-timer
+         my-cursor-speed-threshold nil
+         (lambda ()
+           (if (input-pending-p)
+               (setq cursor-type '(bar . 5)) ;; grueso si escribes rápido
+             (setq cursor-type '(bar . 2)))))))
+
+(add-hook 'post-command-hook #'my-adjust-cursor-size)
+
+;; Beacon (flash suave al moverte)
+(use-package beacon
+  :ensure t
+  :config
+  (setq beacon-color "#82A7DD"           ;; azul elegante
+        beacon-size 40
+        beacon-blink-duration 0.2)
+  (beacon-mode 1))
+
+;; Doom-modeline
+(use-package doom-modeline
+  :ensure t
+  :init
+  (doom-modeline-mode 1)
+  :config
+  ;; Altura y barra coherentes con tema sofisticado
+  (setq doom-modeline-height 28
+        doom-modeline-bar-width 4
+        doom-modeline-hud nil          ;; sin HUD extra, que ya tienes yascroll
+        doom-modeline-buffer-encoding nil
+        doom-modeline-time t
+        doom-modeline-vcs t
+        doom-modeline-lsp t
+        doom-modeline-env-version t
+        doom-modeline-buffer-state-icon t
+        doom-modeline-modal-icon t))
+
+;; Números de línea
+(setq display-line-numbers-type 'visual)
+(global-display-line-numbers-mode 1)
+
+(dolist (mode '(eshell-mode-hook
+                shell-mode-hook
+                term-mode-hook
+                dashboard-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (> (buffer-size) 500000)
+              (display-line-numbers-mode -1))))
+
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-;; ;; NOTE: change theme using load-theme
-(load-theme 'elegant-black t)
-; TODO @luisantonioig: Make a cheat sheet of any available command in my configuration
+;; Carga del tema (tu variante elegante)
+(load-theme 'elegant-black2 t)
+					; TODO @luisantonioig: Make a cheat sheet of any available command in my configuration
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 (add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
@@ -215,23 +318,23 @@
     (and (file-directory-p font-dir)
          (> (length (directory-files font-dir nil "\\.ttf$")) 0))))
 
-(use-package doom-modeline
-  :ensure t
-  :init
-  (doom-modeline-mode 1))
-  ;; Install only if they aren't installed yet
-  ; TODO @luisantonioig: This takes so much, maybe look for a better solution to run nerd-icons-install-fonts
-  ;; (unless (my/nerd-icons-fonts-installed-p)
-  ;;   (nerd-icons-install-fonts t))) ;; `t` para instalar sin preguntar
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :init
+;;   (doom-modeline-mode 1))
+;;   ;; Install only if they aren't installed yet
+;;   ; TODO @luisantonioig: This takes so much, maybe look for a better solution to run nerd-icons-install-fonts
+;;   ;; (unless (my/nerd-icons-fonts-installed-p)
+;;   ;;   (nerd-icons-install-fonts t))) ;; `t` para instalar sin preguntar
 
-(setq doom-modeline-height 25)  ;; Ajustar altura
-(setq doom-modeline-bar-width 4) ;; Ajustar ancho de la barra de estado
-(setq doom-modeline-icon t)      ;; Habilitar iconos si están disponibles
-(setq doom-modeline-major-mode-icon t) ;; Mostrar icono del modo actual
-(setq doom-modeline-buffer-file-name-style 'relative-to-project) ;; Nombre del archivo relativo al proyecto
-(setq doom-modeline-enable-word-count t) ;; Mostrar conteo de palabras en modos como org-mode
-(setq doom-modeline-buffer-encoding nil) ;; Ocultar codificación del buffer
-(setq doom-modeline-env-version nil) ;; Ocultar versiones de entorno como Python o Node
+;; (setq doom-modeline-height 25)  ;; Ajustar altura
+;; (setq doom-modeline-bar-width 4) ;; Ajustar ancho de la barra de estado
+;; (setq doom-modeline-icon t)      ;; Habilitar iconos si están disponibles
+;; (setq doom-modeline-major-mode-icon t) ;; Mostrar icono del modo actual
+;; (setq doom-modeline-buffer-file-name-style 'relative-to-project) ;; Nombre del archivo relativo al proyecto
+;; (setq doom-modeline-enable-word-count t) ;; Mostrar conteo de palabras en modos como org-mode
+;; (setq doom-modeline-buffer-encoding nil) ;; Ocultar codificación del buffer
+;; (setq doom-modeline-env-version nil) ;; Ocultar versiones de entorno como Python o Node
 
 ;; Aiken support
 
@@ -313,10 +416,6 @@
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
 
-(use-package prettier-js
-  :ensure nil
-  :hook ((typescript-ts-mode . prettier-js-mode)
-         (tsx-ts-mode . prettier-js-mode)))
 
 (defun my/typescript-treesit-fontlock ()
   "Configurar resaltado sintáctico para TypeScript con tree-sitter."
@@ -364,24 +463,31 @@
          (tsx-ts-mode . lsp))
   :commands lsp
   :config
-  ;; Configuración básica
-  (setq lsp-headerline-breadcrumb-enable t)
-  (setq lsp-typescript-suggest-complete-function-calls t)
-  (setq lsp-typescript-format-enable t)
-  
-  ;;Configuración de performance
-  (setq lsp-idle-delay 0.5)
-  (setq lsp-log-io nil)
-  (setq lsp-completion-provider :capf)
-  (setq lsp-keep-workspace-alive nil)
-  
-  ;; Configuración específica para TypeScript
-  (setq lsp-typescript-preferences-import-module-specifier 'relative)
-  (setq lsp-typescript-surveys-enabled nil)
+
+  ;; 💡 SOLUCIÓN CRÍTICA PARA EL PROBLEMA DE RUTAS LARGAS (NIX/SYMLINKS)
+  ;; Forzamos al servidor LSP a usar alias o nombres de módulo, no rutas relativas.
+  ;; Esto soluciona tu problema de '../../iog/fiu-workshop-2025/...'
+  (setq lsp-typescript-preferences-import-module-specifier 'non-relative)
+  (setq lsp-javascript-preferences-import-module-specifier 'non-relative)
+
+  ;; OPTIMIZACIÓN Y RENDIMIENTO
+  (setq lsp-headerline-breadcrumb-enable t) ; Muestra la ruta del archivo en la barra superior (útil)
+  (setq lsp-idle-delay 0.5)                 ; Espera 0.5 segundos antes de reindexar
+  (setq lsp-log-io nil)                     ; Deshabilita logs de entrada/salida (mejora rendimiento)
+
+  ;; CONFIGURACIÓN DE ACCIONES DE CÓDIGO (organizar imports)
+  ;; Si quieres que "Organize Imports" sea una acción manual:
   (setq lsp-disabled-code-actions '("source.organizeImports"))
 
-  )
+  ;; Si quieres que "Organize Imports" sea una acción automática (sólo si confías en el LSP):
+  ;; (add-hook 'before-save-hook 'lsp-organize-imports)
+)
 
+
+(use-package prettier-js
+  :ensure nil
+  :hook ((typescript-ts-mode . prettier-js-mode)
+        (tsx-ts-mode . prettier-js-mode)))
 ;; (use-package company
 ;;   :ensure t
 ;;   :hook (lsp-mode . company-mode)
@@ -510,3 +616,8 @@
   :ensure t
   :mode "\\.nix\\'"
   :hook (nix-mode . lsp))
+
+(provide '.emacs)
+
+;;(setq lsp-javascript-preferences-import-module-specifier "relative")
+;;; .emacs ends here

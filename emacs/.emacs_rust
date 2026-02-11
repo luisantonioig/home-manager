@@ -1,0 +1,280 @@
+;;; .emacs --- Rust-only init -*- lexical-binding: t; -*-
+;;; Code:
+
+;; Transparencia (ligero glass-morphism sobrio)
+(set-frame-parameter (selected-frame) 'alpha-background 95)
+(add-to-list 'default-frame-alist '(alpha-background . 95))
+
+;; Fuente (opcional)
+;; (set-frame-font "IBM Plex Mono-12" nil t)
+
+;; Cursor “inteligente”
+(setq indicate-buffer-boundaries 'left)
+(blink-cursor-mode 1)
+(setq-default cursor-type '(bar . 2))
+(setq blink-cursor-blinks 0)
+(setq which-func-update-delay 1.0)
+
+;; GUI
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+;; Backups / autosave
+(setq backup-directory-alist `((".*" . "~/.emacs.d/backups/")))
+(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
+
+(setq-default header-line-format nil)
+
+;; Indentación general
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+
+;; Números de línea y visual-line
+(setq display-line-numbers-type 'visual)
+(global-display-line-numbers-mode 1)
+(global-visual-line-mode t)
+
+;; Deshabilitar line numbers donde estorban
+(dolist (mode '(eshell-mode-hook
+                shell-mode-hook
+                term-mode-hook
+                dashboard-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (> (buffer-size) 500000)
+              (display-line-numbers-mode -1))))
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(load-theme 'elegant-black2 t)
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+
+(setq inhibit-startup-screen t)
+(setq initial-buffer-choice nil)
+(setq inhibit-startup-echo-area-message t)
+
+;; -----------------------------------------------------------------------------
+;; Packages (solo cosas generales + Rust)
+;; -----------------------------------------------------------------------------
+
+;; Scrollbar estilo VSCode en fringe derecho
+(use-package yascroll
+  :ensure t
+  :config
+  (setq yascroll:scroll-bar 'right-fringe
+        yascroll:delay-to-hide 0.5)
+  (global-yascroll-bar-mode 1)
+  (set-face-attribute 'yascroll:thumb-fringe nil
+                      :background "#FFD479"
+                      :foreground "#FFD479"))
+
+;; Beacon (flash suave al moverte)
+(use-package beacon
+  :ensure t
+  :config
+  (setq beacon-color "#82A7DD"
+        beacon-size 40
+        beacon-blink-duration 0.2)
+  (beacon-mode 1))
+
+;; Doom-modeline
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 28
+        doom-modeline-bar-width 4
+        doom-modeline-hud nil
+        doom-modeline-buffer-encoding nil
+        doom-modeline-time t
+        doom-modeline-vcs t
+        doom-modeline-lsp t
+        doom-modeline-env-version t
+        doom-modeline-buffer-state-icon t
+        doom-modeline-modal-icon t))
+
+;; exec-path-from-shell (solo para que Emacs vea rust-analyzer/cargo/rustfmt en GUI)
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+;; Completion / company
+(use-package company
+  :ensure t
+  :hook (after-init . global-company-mode)
+  :config
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.1))
+
+(use-package company-quickhelp
+  :ensure t
+  :after company
+  :config
+  (company-quickhelp-mode 1))
+
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode 1))
+
+;; Git
+(use-package magit
+  :ensure t)
+
+;; Proyecto (útil para Rust workspaces)
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-project-search-path '("~/iog" "~/personal")
+        projectile-enable-caching t)
+  :config
+  (projectile-mode +1)
+  (setq projectile-switch-project-action #'projectile-dired)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+;; Search stack
+(use-package vertico
+  :ensure t
+  :init (vertico-mode 1))
+
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package consult
+  :ensure t
+  :bind (("C-s" . consult-line)
+         ("C-x b" . consult-buffer)
+         ("M-y" . consult-yank-pop))
+  :init
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-preview)
+  :hook (completion-list-mode . consult-preview-at-point-mode))
+
+;; Dashboard (no es “otro lenguaje”, solo UI)
+(use-package dashboard
+  :ensure t
+  :init
+  (setq dashboard-startup-banner 'logo
+        dashboard-center-content t
+        dashboard-items '((recents  . 5)
+                          (bookmarks . 5)))
+  :config
+  (dashboard-setup-startup-hook))
+
+(defun dashboard-refresh ()
+  "Refrescar el buffer del dashboard."
+  (interactive)
+  (when (get-buffer dashboard-buffer-name)
+    (kill-buffer dashboard-buffer-name))
+  (dashboard-insert-startupify-lists)
+  (switch-to-buffer dashboard-buffer-name))
+
+(global-set-key (kbd "C-c d") 'dashboard-refresh)
+
+;; -----------------------------------------------------------------------------
+;; Tree-sitter (general, pero lo usaremos para Rust)
+;; -----------------------------------------------------------------------------
+(use-package tree-sitter
+  :ensure t)
+
+(use-package tree-sitter-langs
+  :ensure t
+  :after tree-sitter)
+
+(setq tree-sitter-load-path '("~/.emacs.d/tree-sitter"))
+(setq tree-sitter-langs-grammar-dir "~/.emacs.d/tree-sitter")
+(setq treesit-extra-load-path '("~/.emacs.d/tree-sitter"))
+
+;; -----------------------------------------------------------------------------
+;; Rust-only setup
+;; -----------------------------------------------------------------------------
+
+(use-package rust-mode
+  :ensure t
+  :mode ("\\.rs\\'" . rust-mode)
+  :hook (rust-mode . (lambda ()
+                       ;; formato al guardar (requiere rustfmt en PATH)
+                       (setq rust-format-on-save t))))
+
+(use-package toml-mode
+  :ensure t
+  :mode ("\\(Cargo\\.lock\\|Cargo\\.toml\\)\\'" . toml-mode))
+
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))
+
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  ;; Rust-analyzer
+  (setq lsp-rust-analyzer-server-command '("rust-analyzer")
+        lsp-enable-snippet nil
+        lsp-idle-delay 0.5))
+
+(use-package lsp-ui
+  :ensure t
+  :after lsp-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-sideline-enable t))
+
+(add-hook 'rust-mode-hook #'lsp-deferred)
+
+;; -----------------------------------------------------------------------------
+;; Cursor que refleja el estado del buffer
+;; -----------------------------------------------------------------------------
+(defun my-cursor-update ()
+  "Cambia el color del cursor según el estado del buffer."
+  (if (buffer-modified-p)
+      (set-cursor-color "#E87A7A")
+    (set-cursor-color "#FFD479")))
+
+(add-hook 'post-command-hook #'my-cursor-update)
+
+(defvar my-cursor-timer nil)
+(defvar my-cursor-speed-threshold 0.1)
+
+(defun my-adjust-cursor-size ()
+  "Ajusta el tamaño del cursor según la velocidad de escritura."
+  (when my-cursor-timer
+    (cancel-timer my-cursor-timer))
+  (setq my-cursor-timer
+        (run-with-timer
+         my-cursor-speed-threshold nil
+         (lambda ()
+           (if (input-pending-p)
+               (setq cursor-type '(bar . 5))
+             (setq cursor-type '(bar . 2)))))))
+
+(add-hook 'post-command-hook #'my-adjust-cursor-size)
+
+;; -----------------------------------------------------------------------------
+;; Atajo para TODOs (neutral; no depende de lenguaje)
+;; -----------------------------------------------------------------------------
+(defun insert-todo-luisantonioig ()
+  "Inserta un TODO con el formato del comentario del modo actual."
+  (interactive)
+  (let ((todo-text (concat (or comment-start "//") " TODO @luisantonioig: ")))
+    (insert todo-text)))
+
+(global-set-key (kbd "C-c t") 'insert-todo-luisantonioig)
+
+(provide '.emacs)
+;;; .emacs ends here

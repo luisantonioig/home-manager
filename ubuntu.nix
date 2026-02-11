@@ -1,4 +1,4 @@
-{ pkgs, aikenFlake, currentProfile, project-tracker, image-viewer, cardanoNodeFlake, ... }:
+{ pkgs, aikenFlake, project-tracker, image-viewer, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -20,75 +20,77 @@
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   programs.alacritty = {
-    package = pkgs.runCommand "alacritty-system" {} ''
-      mkdir -p $out/bin
-      ln -s /usr/bin/alacritty $out/bin/alacritty
-    '';
-    enable = true;
-    settings = {
-      window = {
-        padding = {
-          x = 8;
-          y = 8;
-        };
-        opacity = 0.9;
+  package = pkgs.runCommand "alacritty-system" {} ''
+    mkdir -p $out/bin
+    ln -s /usr/bin/alacritty $out/bin/alacritty
+  '';
+  enable = true;
+  settings = {
+    window = {
+      padding = {
+        x = 8;
+        y = 8;
       };
-      
-      font = {
-        normal = {
-          family = "IBM Plex Mono";
-        };
-        size = 12.0;
+      # Emacs: alpha-background 95 → aquí algo muy parecido
+      opacity = 0.95;
+    };
+
+    font = {
+      normal = {
+        family = "IBM Plex Mono";
       };
-      
-      # Esquema de colores similar al que tenías en Kitty
-      colors = {
-        primary = {
-          background = "#1E1E1E";
-          foreground = "#DCDCCC";
-        };
-        
-        cursor = {
-          text = "#1E1E1E";
-          cursor = "#FFCC66";
-        };
-        
-        selection = {
-          text = "#DCDCCC";
-          background = "#3A3A3A";
-        };
-        
-        normal = {
-          black = "#1E1E1E";
-          red = "#F2777A";
-          green = "#99CC99";
-          yellow = "#FFCC66";
-          blue = "#6699CC";
-          magenta = "#CC99CC";
-          cyan = "#66CCCC";
-          white = "#DCDCCC";
-        };
-        
-        bright = {
-          black = "#7F7F7F";
-          red = "#F2777A";
-          green = "#99CC99";
-          yellow = "#FFCC66";
-          blue = "#6699CC";
-          magenta = "#CC99CC";
-          cyan = "#66CCCC";
-          white = "#FFFFFF";
-        };
+      size = 12.0;
+    };
+
+    # Paleta alineada con elegant-black2 (Obsidian Noir)
+    colors = {
+      primary = {
+        background = "#0E0E10"; # bg
+        foreground = "#D7D7D9"; # fg
       };
-      
+
       cursor = {
-        style = {
-          shape = "Beam";
-          blinking = "Off";
-        };
+        text   = "#0E0E10"; # mismo que background
+        cursor = "#FFD479"; # accent / cursor en el theme
+      };
+
+      selection = {
+        text       = "#D7D7D9"; # fg
+        background = "#1C1C20"; # bg-alt2 (como region en Emacs)
+      };
+
+      normal = {
+        black   = "#0E0E10"; # bg
+        red     = "#E87A7A"; # red
+        green   = "#9CD6A3"; # green
+        yellow  = "#FFD479"; # yellow
+        blue    = "#82A7DD"; # blue
+        magenta = "#C7A1E6"; # magenta
+        cyan    = "#71D4C3"; # cyan
+        white   = "#D7D7D9"; # fg
+      };
+
+      bright = {
+        black   = "#555555"; # grey-alt
+        red     = "#E87A7A"; # puedes cambiarlos si quieres más contraste
+        green   = "#9CD6A3";
+        yellow  = "#FFD479";
+        blue    = "#82A7DD";
+        magenta = "#C7A1E6";
+        cyan    = "#71D4C3";
+        white   = "#FFFFFF"; # blanco más brillante
+      };
+    };
+
+    cursor = {
+      style = {
+        shape    = "Beam"; # como el cursor bar de Emacs
+        blinking = "Off";
       };
     };
   };
+};
+
   # targets.genericLinux.enable = true;
   
   # # Asegurarnos de tener las fuentes necesarias
@@ -144,6 +146,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages =(with pkgs; [
+    typst
     nix-your-shell
     # gimp does not work correctly
     # gimp
@@ -158,7 +161,7 @@
 
     nodejs
     nodePackages.typescript
-    nodePackages.ts-node
+    # nodePackages.ts-node
     nodePackages.prettier
     # Language servers
     jdt-language-server
@@ -171,7 +174,9 @@
 
     # to compile the mastering cardano book
     bundler
-    
+
+    # Rust programming
+    rustup
   ]);
   programs.home-manager.enable = true;
 }

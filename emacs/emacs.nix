@@ -25,6 +25,7 @@
       epkgs.flycheck
       epkgs.projectile
       epkgs.doom-modeline
+      epkgs.yascroll
       
       epkgs.nerd-icons
       epkgs.dashboard
@@ -60,16 +61,15 @@
 
     ];
   };
-
-  
-
-  
   
   home.file.".emacs".source = builtins.path {
     path = ./.emacs;
   };
   home.file.".emacs.d/themes/elegant-black-theme.el".source = builtins.path {
     path = ./elegant-black-theme.el;
+  };
+  home.file.".emacs.d/themes/elegant-black2-theme.el".source = builtins.path {
+    path = ./elegant-black2-theme.el;
   };
   home.file.".emacs.d/themes/elegant-light-theme.el".source = builtins.path {
     path = ./elegant-light-theme.el;

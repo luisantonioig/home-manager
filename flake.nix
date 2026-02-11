@@ -58,6 +58,17 @@
         };
         modules = [ ./ubuntu.nix ];
       };
+      homeConfigurations.contribute-clippy = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit image-viewer;
+          inherit aikenFlake;
+          inherit project-tracker;
+          inherit cardanoNodeFlake;
+          currentProfile = "contribute-clippy";
+        };
+        modules = [ ./contribute-clippy.nix ];
+      };
       homeConfigurations.rare-evo-2025 = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {

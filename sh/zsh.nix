@@ -46,7 +46,10 @@ in
       if [ -f "$HOME/.variables" ]; then
         source "$HOME/.variables"
       fi
+      export COMPACT_HOME=/home/antonio/compact_binaries
+      export PATH=$PATH:$COMPACT_HOME
     '';
+    
     shellAliases = my-aliases;
     plugins = [
       # Plugins que quieras usar
@@ -56,7 +59,11 @@ in
   };
   home.sessionVariables = {
     SHELL = "${pkgs.zsh}/bin/zsh";
+    COMPACT_HOME = "/home/antonio/compact/binaries";
   };
+  home.sessionPath = [
+    "$HOME:$COMPACT_HOME"
+  ];
   programs.bash.enable = false;
   targets.genericLinux.enable = true;
   home.packages = with pkgs; [
