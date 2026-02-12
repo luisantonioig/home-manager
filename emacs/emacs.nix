@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, currentProfile ? "", ... }:
 {
   services.emacs.enable = true;
   # # Instalar Emacs y configuraciones básicas
@@ -14,9 +14,7 @@
       epkgs.magit
 	    epkgs.company
 	    epkgs.company-quickhelp
-	    epkgs.nix-mode
-      epkgs.haskell-mode
-      epkgs.lsp-haskell
+      epkgs.nix-mode
       epkgs.lsp-mode
       epkgs.lsp-ui
 	    epkgs.json-mode
@@ -56,10 +54,14 @@
       epkgs.htmlize
       epkgs.shfmt
       epkgs.lsp-java
-      
+      epkgs.envrc
 
 
-    ];
+
+    ] ++ (if currentProfile == "haskell96" then [
+      epkgs.haskell-mode
+      epkgs.lsp-haskell
+    ] else []);
   };
   
   home.file.".emacs".source = builtins.path {

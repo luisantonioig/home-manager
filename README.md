@@ -32,6 +32,20 @@ home-manager switch --flake .#rare-evo-2025
 nix flake update
 ```
 
+## Flujo rapido con Emacs
+
+El modulo `emacs/emacs.nix` habilita `services.emacs.enable = true` (daemon de usuario).
+Con los aliases de `zsh`:
+
+- `e`: abre GUI rapido con `emacsclient -c -a ''`
+- `et`: abre en terminal con `emacsclient -t -a ''`
+- `ek`: cierra el daemon (`kill-emacs`)
+
+```bash
+home-manager switch --flake .#antonio
+e
+```
+
 ## Convenciones
 
 - Mantener modulos pequenos y composables.

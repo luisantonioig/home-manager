@@ -13,6 +13,11 @@ let
     cd = "z";
     "," = "comma";
     rb = "$HOME/personal/nixos-config/rebuild.sh";
+    e = "emacsclient -c -a ''";
+    et = "emacsclient -t -a ''";
+    ek = "systemctl --user stop emacs.service";
+    er = "systemctl --user restart emacs.service";
+    es = "systemctl --user status emacs.service --no-pager";
   };
 in
 {
