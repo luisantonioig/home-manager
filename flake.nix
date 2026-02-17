@@ -14,7 +14,7 @@
     #   url = "github:luisantonioig/aiken-mode/ac165240a4a25314b7a2891840059d99f30f35f8";
     #   inputs.nixpks.follows = "nixpkgs";
     # };
-    
+
     # nix-your-shell = {
     #   url = "github:MercuryTechnologies/nix-your-shell";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -27,58 +27,22 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      commonArgs = {
+        inherit image-viewer aikenFlake project-tracker cardanoNodeFlake;
+      };
+      mkHome = profile: modulePath:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ modulePath ];
+          extraSpecialArgs = commonArgs // { currentProfile = profile; };
+        };
     in {
-      homeConfigurations."antonio" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = { 
-          currentProfile = "antonio";
-        };
-      };
-      homeConfigurations.haskell96 = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit image-viewer;
-          inherit aikenFlake;
-          # inherit aikenMode;
-          inherit project-tracker;
-          inherit cardanoNodeFlake;
-          currentProfile = "haskell96";
-        };
-        modules = [ ./haskell96.nix ];
-      };
-      homeConfigurations.ubuntu = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit image-viewer;
-          inherit aikenFlake;
-          inherit project-tracker;
-          inherit cardanoNodeFlake;
-          currentProfile = "ubuntu";
-        };
-        modules = [ ./ubuntu.nix ];
-      };
-      homeConfigurations.contribute-clippy = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit image-viewer;
-          inherit aikenFlake;
-          inherit project-tracker;
-          inherit cardanoNodeFlake;
-          currentProfile = "contribute-clippy";
-        };
-        modules = [ ./contribute-clippy.nix ];
-      };
-      homeConfigurations.rare-evo-2025 = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit image-viewer;
-          inherit aikenFlake;
-          inherit project-tracker;
-          inherit cardanoNodeFlake;
-          currentProfile = "rare-evo-2025";
-        };
-        modules = [ ./rare-evo-2025.nix ];
+      homeConfigurations = {
+        antonio = mkHome "antonio" ./home.nix;
+        haskell96 = mkHome "haskell96" ./haskell96.nix;
+        ubuntu = mkHome "ubuntu" ./ubuntu.nix;
+        contribute-clippy = mkHome "contribute-clippy" ./contribute-clippy.nix;
+        rare-evo-2025 = mkHome "rare-evo-2025" ./rare-evo-2025.nix;
       };
     };
 }
