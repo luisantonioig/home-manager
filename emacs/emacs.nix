@@ -1,6 +1,9 @@
 { pkgs, currentProfile ? "", ... }:
 {
   services.emacs.enable = true;
+  systemd.user.services.emacs.Service.EnvironmentFile = [
+    "%h/.config/secrets/openai.env"
+  ];
   # # Instalar Emacs y configuraciones básicas
   programs.home-manager.enable = true;
   programs.emacs = {
@@ -26,6 +29,7 @@
       epkgs.yascroll
       
       epkgs.nerd-icons
+      epkgs.exec-path-from-shell
       epkgs.dashboard
       epkgs.dash
       epkgs.dash-functional
@@ -84,6 +88,7 @@
   };
   home.packages = with pkgs; [ 
     ripgrep
+    pandoc
     nerd-fonts.fira-code
     vim-full
   ];

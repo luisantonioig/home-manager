@@ -1,9 +1,9 @@
 ;;; .emacs --- Rust-only init -*- lexical-binding: t; -*-
 ;;; Code:
 
-;; Transparencia (ligero glass-morphism sobrio)
-(set-frame-parameter (selected-frame) 'alpha-background 95)
-(add-to-list 'default-frame-alist '(alpha-background . 95))
+;; Transparencia al 50%.
+(set-frame-parameter (selected-frame) 'alpha-background 50)
+(add-to-list 'default-frame-alist '(alpha-background . 50))
 
 ;; Fuente (opcional)
 ;; (set-frame-font "IBM Plex Mono-12" nil t)

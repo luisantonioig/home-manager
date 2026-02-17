@@ -52,8 +52,8 @@
    `(show-paren-match ((,class (:background ,blue :foreground ,bg :weight bold))))
    `(show-paren-mismatch ((,class (:background ,red :foreground ,bg :weight bold))))
    ))
-(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
-(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+(set-frame-parameter (selected-frame) 'alpha-background 50)
+(add-to-list 'default-frame-alist '(alpha-background . 50))
 ;; (set-frame-font "IBM Plex Mono-12" nil t)
 ;; Cursor configuration
 (blink-cursor-mode 1)

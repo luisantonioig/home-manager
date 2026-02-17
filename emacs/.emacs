@@ -44,9 +44,9 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (load-theme 'elegant-black2 t)
 
-;; Transparencia ligera (efecto sobrio tipo glass).
-(set-frame-parameter (selected-frame) 'alpha-background 95)
-(add-to-list 'default-frame-alist '(alpha-background . 95))
+;; Transparencia al 50%.
+(set-frame-parameter (selected-frame) 'alpha-background 35)
+(add-to-list 'default-frame-alist '(alpha-background . 35))
 
 ;; Fuente para GUI (tambien en nuevos frames cuando corres Emacs como daemon).
 (defun my/setup-fonts (&optional frame)
