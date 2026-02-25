@@ -1,5 +1,18 @@
 { pkgs, ... }:
 
+let
+  monitorErroresUltimaHora = pkgs.writeShellApplication {
+    name = "monitor-errores-ultima-hora";
+    runtimeInputs = with pkgs; [
+      coreutils
+      gawk
+      gnugrep
+      gnused
+      systemd
+    ];
+    text = builtins.readFile ./monitor_errores_ultima_hora.sh;
+  };
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -80,11 +93,12 @@
     ibm-plex
     ripgrep
     
-    nodejs_23
+    nodejs
     typescript
     typescript-language-server
 
-    
+    monitorErroresUltimaHora
+
   ]);
     
     

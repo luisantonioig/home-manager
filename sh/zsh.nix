@@ -19,6 +19,8 @@ let
     er = "systemctl --user restart emacs.service";
     es = "systemctl --user status emacs.service --no-pager";
     codex = "npx -y @openai/codex";
+    gpu-monitor = "monitor-errores-ultima-hora";
+    gpu-monitor-detallado = "monitor-errores-ultima-hora --detallado";
   };
 in
 {

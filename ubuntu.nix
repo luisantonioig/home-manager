@@ -1,5 +1,25 @@
 { pkgs, aikenFlake, project-tracker, image-viewer, ... }:
 
+let
+  monitorScriptPath = ./monitor_errores_ultima_hora.sh;
+  monitorErroresUltimaHora = pkgs.writeShellApplication {
+    name = "monitor-errores-ultima-hora";
+    runtimeInputs = with pkgs; [
+      coreutils
+      gawk
+      gnugrep
+      gnused
+      systemd
+    ];
+    text =
+      if builtins.pathExists monitorScriptPath then
+        builtins.readFile monitorScriptPath
+      else
+        ''
+          exec bash /home/antonio/personal/home-manager/monitor_errores_ultima_hora.sh "$@"
+        '';
+  };
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -106,6 +126,7 @@
 
     # Rust programming
     rustup
+    monitorErroresUltimaHora
   ]);
   programs.home-manager.enable = true;
 }
